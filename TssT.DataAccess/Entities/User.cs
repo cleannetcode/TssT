@@ -2,7 +2,7 @@
 
 namespace TssT.DataAccess.Entities
 {
-    public class ApplicationUser : IdentityUser
+    public class User : IdentityUser
     {
     }
 }
