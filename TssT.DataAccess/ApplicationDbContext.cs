@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using TssT.DataBase.Entities;
+using TssT.DataAccess.Entities;
 
-namespace TssT.DataBase
+namespace TssT.DataAccess
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {

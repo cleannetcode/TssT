@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace TssT.DataBase.Entities
+namespace TssT.DataAccess.Entities
 {
     public class ApplicationUser : IdentityUser
     {

@@ -8,8 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.Businesslogic", "TssT.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.DataAccess", "TssT.DataAccess\TssT.DataAccess.csproj", "{4B3130BA-A9F5-4CCE-BAC5-D1BAD042FE13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.DataBase", "TssT.DataBase\TssT.DataBase.csproj", "{40C6FCD6-C314-41BB-A81B-46FF23D49FC5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.Frontand", "TssT.Frontand\TssT.Frontand.csproj", "{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}"
 EndProject
 Global
@@ -34,10 +32,6 @@ Global
 		{4B3130BA-A9F5-4CCE-BAC5-D1BAD042FE13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B3130BA-A9F5-4CCE-BAC5-D1BAD042FE13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B3130BA-A9F5-4CCE-BAC5-D1BAD042FE13}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40C6FCD6-C314-41BB-A81B-46FF23D49FC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40C6FCD6-C314-41BB-A81B-46FF23D49FC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40C6FCD6-C314-41BB-A81B-46FF23D49FC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40C6FCD6-C314-41BB-A81B-46FF23D49FC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
