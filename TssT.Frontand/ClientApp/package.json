@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start5001": "ng serve --port=5001",
     "build": "ng build",
     "build:ssr": "ng run TssT.API:server:dev",
     "test": "ng test",
