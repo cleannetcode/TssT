@@ -6,7 +6,7 @@ using TssT.DataAccess.Entities;
 
 namespace TssT.DataAccess
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : ApiAuthorizationDbContext<User>
     {
         public ApplicationDbContext(
             DbContextOptions options,

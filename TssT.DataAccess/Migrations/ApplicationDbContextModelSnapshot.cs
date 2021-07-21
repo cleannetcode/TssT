@@ -18,7 +18,7 @@ namespace TssT.API.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.0-rc.1.20417.2");
 
-            modelBuilder.Entity("TssT.API.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TssT.API.Models.User", b =>
             {
                 b.Property<string>("Id")
                     .HasColumnType("TEXT");
@@ -328,7 +328,7 @@ namespace TssT.API.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
             {
-                b.HasOne("TssT.API.Models.ApplicationUser", null)
+                b.HasOne("TssT.API.Models.User", null)
                     .WithMany()
                     .HasForeignKey("UserId")
                     .OnDelete(DeleteBehavior.Cascade)
@@ -337,7 +337,7 @@ namespace TssT.API.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
             {
-                b.HasOne("TssT.API.Models.ApplicationUser", null)
+                b.HasOne("TssT.API.Models.User", null)
                     .WithMany()
                     .HasForeignKey("UserId")
                     .OnDelete(DeleteBehavior.Cascade)
@@ -352,7 +352,7 @@ namespace TssT.API.Data.Migrations
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
-                b.HasOne("TssT.API.Models.ApplicationUser", null)
+                b.HasOne("TssT.API.Models.User", null)
                     .WithMany()
                     .HasForeignKey("UserId")
                     .OnDelete(DeleteBehavior.Cascade)
@@ -361,7 +361,7 @@ namespace TssT.API.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
             {
-                b.HasOne("TssT.API.Models.ApplicationUser", null)
+                b.HasOne("TssT.API.Models.User", null)
                     .WithMany()
                     .HasForeignKey("UserId")
                     .OnDelete(DeleteBehavior.Cascade)
