@@ -9,8 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using TssT.DataBase;
-using TssT.DataBase.Entities;
+using TssT.DataAccess;
+using TssT.DataAccess.Entities;
 
 namespace TssT.API
 {
@@ -31,24 +31,25 @@ namespace TssT.API
                 //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
-                
+
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             // services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //     .AddEntityFrameworkStores<ApplicationDbContext>();
-            
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-            
+
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
             //services.AddIdentityServer().AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-             //
+            //
             //services.AddAuthentication().AddIdentityServerJwt();
-            
+
             services.AddControllers();
-            
+
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo {Title = "Technology stack self-confidence Test", Version = "v1"});
+                options.SwaggerDoc("v1",
+                    new OpenApiInfo {Title = "Technology stack self-confidence Test", Version = "v1"});
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =
@@ -58,7 +59,7 @@ namespace TssT.API
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
-            
+
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
                     {
@@ -72,13 +73,11 @@ namespace TssT.API
                             Scheme = "oauth2",
                             Name = "Bearer",
                             In = ParameterLocation.Header,
-            
                         },
                         new List<string>()
                     }
                 });
             });
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,7 +88,8 @@ namespace TssT.API
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Technology stack self-confidence Test v1"));
+                app.UseSwaggerUI(c =>
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Technology stack self-confidence Test v1"));
             }
 
             app.UseHttpsRedirection();
@@ -99,9 +99,9 @@ namespace TssT.API
             app.UseRouting();
 
             app.UseAuthentication();
-           // app.UseIdentityServer();
+            // app.UseIdentityServer();
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
