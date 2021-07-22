@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 
-namespace TssT.Frontand
+namespace TssT.Frontend
 {
     public class Startup
     {
