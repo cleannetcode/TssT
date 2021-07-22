@@ -18,7 +18,7 @@
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\TssT.DataBase\TssT.DataBase.csproj" />
+      <ProjectReference Include="..\TssT.DataAccess\TssT.DataAccess.csproj" />
      </ItemGroup>
     <ItemGroup>
       <Folder Include="Contracts" />
