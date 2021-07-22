@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.Businesslogic", "TssT.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.DataAccess", "TssT.DataAccess\TssT.DataAccess.csproj", "{4B3130BA-A9F5-4CCE-BAC5-D1BAD042FE13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.Frontand", "TssT.Frontand\TssT.Frontand.csproj", "{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.Frontend", "TssT.Frontend\TssT.Frontend.csproj", "{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

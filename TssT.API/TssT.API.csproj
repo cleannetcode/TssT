@@ -5,7 +5,6 @@
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
         <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
         <IsPackable>false</IsPackable>
-        <SpaRoot>..\TssT.Frontand\ClientApp\</SpaRoot>
         <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
 
         <!-- Set this to true if you enable server-side prerendering -->
@@ -16,6 +15,168 @@
         <Content Remove="$(SpaRoot)**" />
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+        <None Include="..\TssT.Frontend\ClientApp\.editorconfig">
+          <Link>.editorconfig</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\.gitignore">
+          <Link>.gitignore</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\e2e\protractor.conf.js">
+          <Link>e2e\protractor.conf.js</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\e2e\src\app.e2e-spec.ts">
+          <Link>e2e\src\app.e2e-spec.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\e2e\src\app.po.ts">
+          <Link>e2e\src\app.po.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\e2e\tsconfig.e2e.json">
+          <Link>e2e\tsconfig.e2e.json</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\api-authorization.constants.ts">
+          <Link>src\api-authorization\api-authorization.constants.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\api-authorization.module.spec.ts">
+          <Link>src\api-authorization\api-authorization.module.spec.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\api-authorization.module.ts">
+          <Link>src\api-authorization\api-authorization.module.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\authorize.guard.spec.ts">
+          <Link>src\api-authorization\authorize.guard.spec.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\authorize.guard.ts">
+          <Link>src\api-authorization\authorize.guard.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\authorize.interceptor.spec.ts">
+          <Link>src\api-authorization\authorize.interceptor.spec.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\authorize.interceptor.ts">
+          <Link>src\api-authorization\authorize.interceptor.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\authorize.service.spec.ts">
+          <Link>src\api-authorization\authorize.service.spec.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\authorize.service.ts">
+          <Link>src\api-authorization\authorize.service.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\login-menu\login-menu.component.css">
+          <Link>src\api-authorization\login-menu\login-menu.component.css</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\login-menu\login-menu.component.html">
+          <Link>src\api-authorization\login-menu\login-menu.component.html</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\login-menu\login-menu.component.spec.ts">
+          <Link>src\api-authorization\login-menu\login-menu.component.spec.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\login-menu\login-menu.component.ts">
+          <Link>src\api-authorization\login-menu\login-menu.component.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\login\login.component.css">
+          <Link>src\api-authorization\login\login.component.css</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\login\login.component.html">
+          <Link>src\api-authorization\login\login.component.html</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\login\login.component.spec.ts">
+          <Link>src\api-authorization\login\login.component.spec.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\login\login.component.ts">
+          <Link>src\api-authorization\login\login.component.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\logout\logout.component.css">
+          <Link>src\api-authorization\logout\logout.component.css</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\logout\logout.component.html">
+          <Link>src\api-authorization\logout\logout.component.html</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\logout\logout.component.spec.ts">
+          <Link>src\api-authorization\logout\logout.component.spec.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\api-authorization\logout\logout.component.ts">
+          <Link>src\api-authorization\logout\logout.component.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\app.component.html">
+          <Link>src\app\app.component.html</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\app.component.ts">
+          <Link>src\app\app.component.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\app.module.ts">
+          <Link>src\app\app.module.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\app.server.module.ts">
+          <Link>src\app\app.server.module.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\counter\counter.component.html">
+          <Link>src\app\counter\counter.component.html</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\counter\counter.component.spec.ts">
+          <Link>src\app\counter\counter.component.spec.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\counter\counter.component.ts">
+          <Link>src\app\counter\counter.component.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\fetch-data\fetch-data.component.html">
+          <Link>src\app\fetch-data\fetch-data.component.html</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\fetch-data\fetch-data.component.ts">
+          <Link>src\app\fetch-data\fetch-data.component.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\home\home.component.html">
+          <Link>src\app\home\home.component.html</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\home\home.component.ts">
+          <Link>src\app\home\home.component.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\nav-menu\nav-menu.component.css">
+          <Link>src\app\nav-menu\nav-menu.component.css</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\nav-menu\nav-menu.component.html">
+          <Link>src\app\nav-menu\nav-menu.component.html</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\app\nav-menu\nav-menu.component.ts">
+          <Link>src\app\nav-menu\nav-menu.component.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\assets\.gitkeep">
+          <Link>src\assets\.gitkeep</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\environments\environment.prod.ts">
+          <Link>src\environments\environment.prod.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\environments\environment.ts">
+          <Link>src\environments\environment.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\index.html">
+          <Link>src\index.html</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\karma.conf.js">
+          <Link>src\karma.conf.js</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\main.ts">
+          <Link>src\main.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\polyfills.ts">
+          <Link>src\polyfills.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\styles.css">
+          <Link>src\styles.css</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\test.ts">
+          <Link>src\test.ts</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\tsconfig.app.json">
+          <Link>src\tsconfig.app.json</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\tsconfig.server.json">
+          <Link>src\tsconfig.server.json</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\tsconfig.spec.json">
+          <Link>src\tsconfig.spec.json</Link>
+        </None>
+        <None Include="..\TssT.Frontend\ClientApp\src\tslint.json">
+          <Link>src\tslint.json</Link>
+        </None>
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\TssT.DataAccess\TssT.DataAccess.csproj" />

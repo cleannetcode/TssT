@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <AssemblyName>TssT.Frontend</AssemblyName>
+        <RootNamespace>TssT.Frontend</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
