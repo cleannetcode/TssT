@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "TssT.Frontand": {
+    "TssT.Frontend": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
