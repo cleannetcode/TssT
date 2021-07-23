@@ -4,11 +4,8 @@
         <TargetFramework>net5.0</TargetFramework>
 	<IsPackable>false</IsPackable>
     </PropertyGroup>
-
     <ItemGroup>
-      <Folder Include="Contracts" />
-    </ItemGroup>
-    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
       <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.8" />
       <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.8" />
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />

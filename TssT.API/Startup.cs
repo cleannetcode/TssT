@@ -32,6 +32,11 @@ namespace TssT.API
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddAutoMapper(conf =>
+            {
+                conf.AddProfile<ApiMappingProfile>();
+                conf.AddProfile<DataAccessMappingProfile>();
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
