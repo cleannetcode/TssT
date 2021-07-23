@@ -1,6 +1,6 @@
 using System;
 
-namespace TssT.API
+namespace TssT.API.Contracts
 {
     public class WeatherForecast
     {
