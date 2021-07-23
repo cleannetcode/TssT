@@ -4,9 +4,9 @@ using TssT.DataAccess.Entities;
 
 namespace TssT.DataAccess.Configurations
 {
-    public class QuestionConfiguration: IEntityTypeConfiguration<Question>
+    public class TopicConfiguration: IEntityTypeConfiguration<Topic>
     {
-        public void Configure(EntityTypeBuilder<Question> builder)
+        public void Configure(EntityTypeBuilder<Topic> builder)
         {
             builder.HasKey(obj => obj.Id);
         }

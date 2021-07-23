@@ -9,6 +9,8 @@ namespace TssT.DataAccess
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<User>
     {
+        public DbSet<Topic> Topics { get; set; }
+
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
@@ -22,7 +24,7 @@ namespace TssT.DataAccess
             builder.ApplyConfiguration(new GroupConfiguration());
             builder.ApplyConfiguration(new LevelImportanceConfiguration());
             builder.ApplyConfiguration(new LevelKnowledgeConfiguration());
-            builder.ApplyConfiguration(new QuestionConfiguration());
+            builder.ApplyConfiguration(new TopicConfiguration());
             
             base.OnModelCreating(builder);
         }
