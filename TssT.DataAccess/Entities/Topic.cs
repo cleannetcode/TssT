@@ -1,4 +1,6 @@
-﻿namespace TssT.DataAccess.Entities
+﻿using System.Collections.Generic;
+
+namespace TssT.DataAccess.Entities
 {
     /// <summary>
     /// Топик / Предметная область
@@ -11,5 +13,10 @@
         /// Наименование
         /// </summary>
         public string Name { get; set; }
+        
+        /// <summary>
+        /// Группы топиков
+        /// </summary>
+        public ICollection<TopicGroup> TopicGroup { get; set; }
     }
 }

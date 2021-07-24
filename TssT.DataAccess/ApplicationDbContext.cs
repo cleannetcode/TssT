@@ -10,6 +10,7 @@ namespace TssT.DataAccess
     public class ApplicationDbContext : ApiAuthorizationDbContext<User>
     {
         public DbSet<Topic> Topics { get; set; }
+        public DbSet<TopicGroup> TopicGroups { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
@@ -21,7 +22,7 @@ namespace TssT.DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AnswerConfiguration());
-            builder.ApplyConfiguration(new GroupConfiguration());
+            builder.ApplyConfiguration(new TopicGroupConfiguration());
             builder.ApplyConfiguration(new LevelImportanceConfiguration());
             builder.ApplyConfiguration(new LevelKnowledgeConfiguration());
             builder.ApplyConfiguration(new TopicConfiguration());
