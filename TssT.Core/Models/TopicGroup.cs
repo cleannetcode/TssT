@@ -2,6 +2,9 @@
 
 namespace TssT.Core.Models
 {
+    /// <summary>
+    /// Группа топиков
+    /// </summary>
     public class TopicGroup
     {
         public int Id { get; set; }
@@ -10,5 +13,10 @@ namespace TssT.Core.Models
         /// Наименование
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Родительская группа топиков
+        /// </summary>
+        public TopicGroup Parent { get; set; }
     }
 }
