@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using TssT.Core.Interfaces;
 using TssT.DataAccess.Repositories;
 
@@ -16,6 +17,21 @@ namespace TssT.Businesslogic.Services
         }
         public void Create(Core.Models.User newUser)
         {
+            if (newUser.Email == null)
+            {
+                throw new NullReferenceException("Emait mustn't be empty");
+            } 
+            if (newUser.PasswordHash == null)
+            {
+                throw new NullReferenceException("Password mustn't be empty");
+            } 
+            if (newUser.UserName == null)
+            {
+                throw new NullReferenceException("UserName mustn't be empty");
+            } 
+            
+            
+            
             _usersRepository.Create(newUser);
         }
 

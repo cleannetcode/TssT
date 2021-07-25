@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TssT.Core.Interfaces;
@@ -20,9 +22,14 @@ namespace TssT.API.Controllers
         }
         
         [HttpPost]
-        public void Create(Contracts.User newUser)
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Create(Contracts.NewUser newUser)
         {
-            _usersManagerService.Create(_mapper.Map<Contracts.User, Core.Models.User>(newUser));
+            var user = _mapper.Map<Contracts.NewUser, Core.Models.User>(newUser);
+            _usersManagerService.Create(user);
+            
+            return Ok(user.Id);
         }
         
         [HttpPut]

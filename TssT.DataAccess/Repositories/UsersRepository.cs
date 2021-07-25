@@ -18,6 +18,7 @@ namespace TssT.DataAccess.Repositories
         }
         public void Create(Core.Models.User newUser)
         {
+            
             _userManager.CreateAsync(_mapper.Map<Core.Models.User, Entities.User>(newUser));
         }
 

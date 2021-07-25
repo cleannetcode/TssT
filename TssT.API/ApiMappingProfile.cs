@@ -7,6 +7,8 @@ namespace TssT.API
     {
         public ApiMappingProfile()
         {
+            CreateMap<NewUser, Core.Models.User>();
+            
             CreateMap<User, Core.Models.User>().ReverseMap();
             CreateMap<Answer, Core.Models.Answer>().ReverseMap();
             CreateMap<Group, Core.Models.Group>().ReverseMap();
