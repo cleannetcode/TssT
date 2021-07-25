@@ -11,8 +11,8 @@ namespace TssT.API
             
             CreateMap<User, Core.Models.User>().ReverseMap();
             CreateMap<Answer, Core.Models.Answer>().ReverseMap();
-            CreateMap<Group, Core.Models.Group>().ReverseMap();
-            CreateMap<Question, Core.Models.Question>().ReverseMap();
+            CreateMap<TopicGroupCreate, Core.Models.TopicGroup>().ReverseMap();
+            CreateMap<TopicCreate, Core.Models.Topic>().ReverseMap();
             CreateMap<LevelImportance, Core.Models.LevelImportance>().ReverseMap();
             CreateMap<LevelKnowledge, Core.Models.LevelKnowledge>().ReverseMap();
         }

@@ -10,8 +10,8 @@ namespace TssT.DataAccess
     public class ApplicationDbContext : ApiAuthorizationDbContext<User>
     {
         public DbSet<Answer> answers { get; set; }
-        public DbSet<Group> Groups { get; set; }
-        public DbSet<Question> Questions { get; set; }
+        public DbSet<TopicGroup> TopicGroups { get; set; }
+        public DbSet<Topic> Topics { get; set; }
         public DbSet<LevelImportance> LevelImportances { get; set; }
         public DbSet<LevelKnowledge> LevelKnowledges { get; set; }
         
@@ -25,10 +25,10 @@ namespace TssT.DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AnswerConfiguration());
-            builder.ApplyConfiguration(new GroupConfiguration());
+            builder.ApplyConfiguration(new TopicGroupConfiguration());
             builder.ApplyConfiguration(new LevelImportanceConfiguration());
             builder.ApplyConfiguration(new LevelKnowledgeConfiguration());
-            builder.ApplyConfiguration(new QuestionConfiguration());
+            builder.ApplyConfiguration(new TopicConfiguration());
             base.OnModelCreating(builder);
         }
     }
