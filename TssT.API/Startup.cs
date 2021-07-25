@@ -9,8 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TssT.Businesslogic.Services;
+using TssT.Core.Interfaces;
 using TssT.DataAccess;
 using TssT.DataAccess.Entities;
+using TssT.DataAccess.Repositories;
 
 namespace TssT.API
 {
@@ -49,6 +52,9 @@ namespace TssT.API
             //
             //services.AddAuthentication().AddIdentityServerJwt();
 
+            services.AddScoped<IUsersRepository, UsersRepository>();
+            services.AddScoped<IUsersManagerService, UsersManagerService>();
+            
             services.AddControllers();
 
             services.AddSwaggerGen(options =>
@@ -109,9 +115,7 @@ namespace TssT.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapControllers();
             });
         }
     }

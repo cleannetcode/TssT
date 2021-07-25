@@ -1,18 +1,24 @@
-﻿using TssT.Core.Models;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using TssT.Core.Models;
 
 namespace TssT.DataAccess.Repositories
 {
     public class UsersRepository : IUsersRepository
     {
         private readonly ApplicationDbContext _applicationDbContext;
+        private readonly UserManager<Entities.User> _userManager;
+        private readonly IMapper _mapper;
 
-        public UsersRepository(ApplicationDbContext applicationDbContext)
+        public UsersRepository(ApplicationDbContext applicationDbContext, UserManager<Entities.User> userManager, IMapper mapper)
         {
             _applicationDbContext = applicationDbContext;
+            _userManager = userManager;
+            _mapper = mapper;
         }
         public void Create(Core.Models.User newUser)
         {
-            //_applicationDbContext.Users.Add();
+            _userManager.CreateAsync(_mapper.Map<Core.Models.User, Entities.User>(newUser));
         }
 
         public void Update(User user)
