@@ -1,7 +1,11 @@
-﻿using System.Net;
+﻿using System;
+using System.Data;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TssT.Core.Interfaces;
 
@@ -29,11 +33,17 @@ namespace TssT.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Create(Contracts.NewUser newUser)
+        public async Task<IActionResult> Create(API.Contracts.NewUser newUser)
         {
-            var user = _mapper.Map<Contracts.NewUser, Core.Models.User>(newUser);
-            await _usersManagerService.Create(user);
-
+            var user = _mapper.Map<API.Contracts.NewUser, Core.Models.User>(newUser);
+            try
+            {
+                await _usersManagerService.Create(user);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
             return Ok(user.Id);
         }
         
@@ -42,41 +52,114 @@ namespace TssT.API.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns>bool</returns>
-        /// <exception cref="NotImplementedException"></exception>
         [HttpPut("update")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Update(Contracts.User user)
+        public async Task<IActionResult> Update(API.Contracts.User user)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                await _usersManagerService.Update(_mapper.Map<API.Contracts.User, Core.Models.User>(user));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            return Ok();
         }
 
         /// <summary>
-        /// Delete user
+        /// Delete user by id
         /// </summary>
-        /// <param name="user"></param>
-        /// <returns>bool</returns>
-        /// <exception cref="NotImplementedException"></exception>
-        [HttpDelete("delete")]
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpDelete("deletebyuserid")]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
         [ProducesResponseType(typeof(string), (int) HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Delete(Contracts.User user)
+        public async Task<IActionResult> DeleteByUserId(string userId)
         {
-            throw new System.NotImplementedException();
+            IdentityResult result = null;
+            try
+            {
+                result = await _usersManagerService.DeleteById(userId);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
+            return Ok(result);
         }
+        
+        
+        /// <summary>
+        /// Delete user by username
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        [HttpDelete("deletebyusername")]
+        [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> DeleteByUserName(string userName)
+        {
+            IdentityResult result = null;
+            try
+            {
+                result = await _usersManagerService.DeleteByUserName(userName);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+            
+            return Ok(result);
+        }        
 
         /// <summary>
         /// Get user by id
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         [HttpGet("getbyid")]
-        [ProducesResponseType(typeof(string), (int) HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(string), (int) HttpStatusCode.BadRequest)]
-        public Task<Contracts.User> GetById(int userId)
+        [ProducesResponseType(typeof(API.Contracts.User), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(API.Contracts.User), (int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetById(string userId)
         {
-            throw new System.NotImplementedException();
+            API.Contracts.User user = null;
+            try
+            {
+                user = _mapper.Map<Core.Models.User, API.Contracts.User>( await _usersManagerService.GetById(userId));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+           
+            return Ok(user);
+        }
+        
+        /// <summary>
+        /// Get user by username
+        /// </summary>
+        /// <param name="userUserName"></param>
+        /// <returns></returns>
+        [HttpGet("getbyusername")]
+        [ProducesResponseType(typeof(API.Contracts.User), (int) HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(API.Contracts.User), (int) HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetByUserName(string username)
+        {
+            API.Contracts.User user = null;
+            try
+            {
+                user = _mapper.Map<Core.Models.User, API.Contracts.User>( await _usersManagerService.GetByUserName(username));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+           
+            return Ok(user);
         }
     }
 }

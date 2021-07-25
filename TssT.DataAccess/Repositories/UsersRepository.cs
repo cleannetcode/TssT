@@ -1,7 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using AutoMapper;
+using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TssT.Core.Exceptions;
 using TssT.Core.Models;
 
 namespace TssT.DataAccess.Repositories
@@ -11,6 +15,7 @@ namespace TssT.DataAccess.Repositories
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly UserManager<Entities.User> _userManager;
         private readonly IMapper _mapper;
+        private IUsersRepository _usersRepositoryImplementation;
 
         public UsersRepository(ApplicationDbContext applicationDbContext, UserManager<Entities.User> userManager, IMapper mapper)
         {
@@ -23,19 +28,24 @@ namespace TssT.DataAccess.Repositories
             return await _userManager.CreateAsync(_mapper.Map<Core.Models.User, Entities.User>(newUser));
         }
 
-        public async Task<IActionResult> Update(User user)
+        public async Task<IdentityResult> Update(Core.Models.User user)
         {
-            throw new System.NotImplementedException();
+            return await _userManager.UpdateAsync(_mapper.Map<Core.Models.User, Entities.User>(user));
         }
 
-        public async Task<IActionResult> Delete(User user)
+        public async Task<IdentityResult> Delete(User user)
         {
-            throw new System.NotImplementedException();
+            return await _userManager.DeleteAsync(_mapper.Map<Core.Models.User, Entities.User>(user));
         }
 
-        public Task<User> GetById(int userId)
+        public async Task<Core.Models.User> GetById(string userId)
         {
-            throw new System.NotImplementedException();
+            return _mapper.Map<Entities.User, Core.Models.User>(await _userManager.FindByIdAsync(userId));
+        }
+
+        public async Task<User> GetByUserName(string username)
+        {
+            return _mapper.Map<Entities.User, Core.Models.User>(await _userManager.FindByNameAsync(username));
         }
     }
 }
