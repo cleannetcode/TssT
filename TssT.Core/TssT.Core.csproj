@@ -9,4 +9,10 @@
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.8" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\5.0.7\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

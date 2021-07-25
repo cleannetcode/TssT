@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using TssT.Core.Interfaces;
 using TssT.DataAccess.Repositories;
 
@@ -15,39 +18,39 @@ namespace TssT.Businesslogic.Services
             _usersRepository = usersRepository;
             _mapper = mapper;
         }
-        public void Create(Core.Models.User newUser)
+        public async Task<IdentityResult> Create(Core.Models.User newUser)
         {
-            if (newUser.Email == null)
+            if (newUser.Email == null || newUser.Email != "")
             {
                 throw new NullReferenceException("Emait mustn't be empty");
             } 
-            if (newUser.PasswordHash == null)
+            if (newUser.PasswordHash == null || newUser.PasswordHash != "")
             {
                 throw new NullReferenceException("Password mustn't be empty");
             } 
-            if (newUser.UserName == null)
+            if (newUser.UserName == null || newUser.UserName != "")
             {
                 throw new NullReferenceException("UserName mustn't be empty");
             } 
             
             
             
-            _usersRepository.Create(newUser);
+            return await _usersRepository.Create(newUser);
         }
 
-        public void Update(Core.Models.User user)
+        public async Task<IActionResult> Update(Core.Models.User user)
         {
-           
+            throw new System.NotImplementedException();
         }
 
-        public void Delete(Core.Models.User user)
+        public async Task<IActionResult> Delete(Core.Models.User user)
         {
-            
+            throw new System.NotImplementedException();
         }
 
-        public Core.Models.User GetById(int userId)
+        public Task<Core.Models.User> GetById(int userId)
         {
-            return null;
+            throw new System.NotImplementedException();
         }
     }
 }

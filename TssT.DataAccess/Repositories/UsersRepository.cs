@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using TssT.Core.Models;
 
 namespace TssT.DataAccess.Repositories
@@ -16,23 +18,22 @@ namespace TssT.DataAccess.Repositories
             _userManager = userManager;
             _mapper = mapper;
         }
-        public void Create(Core.Models.User newUser)
+        public async Task<IdentityResult> Create(Core.Models.User newUser)
         {
-            
-            _userManager.CreateAsync(_mapper.Map<Core.Models.User, Entities.User>(newUser));
+            return await _userManager.CreateAsync(_mapper.Map<Core.Models.User, Entities.User>(newUser));
         }
 
-        public void Update(User user)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete(User user)
+        public async Task<IActionResult> Update(User user)
         {
             throw new System.NotImplementedException();
         }
 
-        public User GetById(int userId)
+        public async Task<IActionResult> Delete(User user)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<User> GetById(int userId)
         {
             throw new System.NotImplementedException();
         }

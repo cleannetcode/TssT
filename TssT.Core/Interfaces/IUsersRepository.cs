@@ -1,10 +1,14 @@
-﻿namespace TssT.DataAccess.Repositories
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+
+namespace TssT.DataAccess.Repositories
 {
     public interface IUsersRepository
     {
-        void Create(Core.Models.User newUser);
-        void Update(Core.Models.User user);
-        void Delete(Core.Models.User user);
-        Core.Models.User GetById(int userId);
+        Task<IdentityResult> Create(Core.Models.User newUser);
+        Task<IActionResult> Update(Core.Models.User user);
+        Task<IActionResult> Delete(Core.Models.User user);
+        Task<Core.Models.User> GetById(int userId);
     }
 }
