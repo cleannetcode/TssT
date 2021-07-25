@@ -4,6 +4,14 @@
         <TargetFramework>net5.0</TargetFramework>
 	<IsPackable>false</IsPackable>
     </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\appControllersSchemas.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\appControllersSchemas.xml</DocumentationFile>
+    </PropertyGroup>
     <ItemGroup>
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
       <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.8" />

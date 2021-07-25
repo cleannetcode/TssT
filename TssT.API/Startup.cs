@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,6 +62,10 @@ namespace TssT.API
             {
                 options.SwaggerDoc("v1",
                     new OpenApiInfo {Title = "Technology stack self-confidence Test", Version = "v1"});
+                
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "appControllersSchemas.xml");
+                options.IncludeXmlComments(filePath);
+                
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =
