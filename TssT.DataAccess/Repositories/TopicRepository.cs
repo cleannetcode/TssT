@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using TssT.Core.Interfaces;
 using TssT.Core.Models;
@@ -33,13 +32,8 @@ namespace TssT.DataAccess.Repositories
                 throw new ArgumentNullException(nameof(topic));
 
             var entity = _mapper.Map<Entities.Topic>(topic);
-
-            var existsCount = await _context.Topics.CountAsync(x => x.Name.Equals(topic.Name));
-
-            if (existsCount > 0)
-                throw new ArgumentException($"Topic with title '{topic.Name}' already exists", nameof(topic));
-
             var entry = await _context.AddAsync(entity);
+
             await _context.SaveChangesAsync();
 
             return entry.Entity.Id;
@@ -51,7 +45,10 @@ namespace TssT.DataAccess.Repositories
         /// <returns>Возвращает перечисление топиков</returns>
         public async Task<Topic[]> GetAllAsync()
         {
-            var entities = await _context.Topics.ToArrayAsync();
+            var entities = await _context
+                .Topics
+                .AsNoTracking()
+                .ToArrayAsync();
             return _mapper.Map<Topic[]>(entities);
         }
 
@@ -62,10 +59,13 @@ namespace TssT.DataAccess.Repositories
         /// <returns>В случае успешного выполнения вернет топик</returns>
         public async Task<Topic> GetByIdAsync(int id)
         {
-            if (id < 1)
+            if (id <= default(int))
                 throw new ArgumentOutOfRangeException(nameof(id));
 
-            var entity = await _context.Topics.FirstOrDefaultAsync(x => x.Id.Equals(id));
+            var entity = await _context
+                .Topics
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
             return _mapper.Map<Topic>(entity);
         }
@@ -82,18 +82,7 @@ namespace TssT.DataAccess.Repositories
 
             var entity = _mapper.Map<Entities.Topic>(topic);
 
-            var existsCount = await _context
-                .Topics
-                .CountAsync(x => 
-                    x.Id != topic.Id 
-                    && 
-                    x.Name.Equals(topic.Name)
-                );
-
-            if (existsCount > 0)
-                throw new ArgumentException($"Topic with title '{topic.Name}' already exists", nameof(topic));
-
-            var entry = _context.Update(topic);
+            _context.Update(entity);
 
             await _context.SaveChangesAsync();
         }
@@ -105,12 +94,11 @@ namespace TssT.DataAccess.Repositories
         /// <returns>В случае успешного выполнения возвращает количество затронутых записей в бд</returns>
         public async Task RemoveAsync(int id)
         {
-            if (id < 1)
-                throw new ArgumentOutOfRangeException(nameof(id));
+            _context.Remove(new Topic()
+            {
+                Id = id
+            });
 
-            var entry = await _context.Topics.FirstOrDefaultAsync(x => x.Id.Equals(id));
-
-            _context.Remove(entry);
             await _context.SaveChangesAsync();
         }
     }

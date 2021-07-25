@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using TssT.Core.Interfaces;
 using TssT.Core.Models;
@@ -34,11 +33,6 @@ namespace TssT.DataAccess.Repositories
 
             var entity = _mapper.Map<Entities.TopicGroup>(topicGroup);
 
-            var existsCount = await _context.TopicGroups.CountAsync(x => x.Name.Equals(topicGroup.Name));
-
-            if (existsCount > 0)
-                throw new ArgumentException($"Topic group with title '{topicGroup.Name}' already exists", nameof(topicGroup));
-
             var entry = await _context.AddAsync(entity);
             await _context.SaveChangesAsync();
 
@@ -66,7 +60,7 @@ namespace TssT.DataAccess.Repositories
         /// <returns>В случае успешного выполнения вернет группа топиков</returns>
         public async Task<TopicGroup> GetByIdAsync(int id)
         {
-            if (id < 1)
+            if (id <= default(int))
                 throw new ArgumentOutOfRangeException(nameof(id));
 
             var entity = await _context
@@ -88,19 +82,7 @@ namespace TssT.DataAccess.Repositories
                 throw new ArgumentNullException(nameof(topicGroup));
 
             var entity = _mapper.Map<Entities.TopicGroup>(topicGroup);
-
-            var existsCount = await _context
-                .TopicGroups
-                .CountAsync(x => 
-                    x.Id != topicGroup.Id 
-                    && 
-                    x.Name.Equals(topicGroup.Name)
-                );
-
-            if (existsCount > 0)
-                throw new ArgumentException($"TopicGroup with title '{topicGroup.Name}' already exists", nameof(topicGroup));
-
-            var entry = _context.Update(topicGroup);
+            _context.Update(entity);
 
             await _context.SaveChangesAsync();
         }
@@ -112,18 +94,9 @@ namespace TssT.DataAccess.Repositories
         /// <returns>В случае успешного выполнения возвращает количество затронутых записей в бд</returns>
         public async Task RemoveAsync(int id)
         {
-            if (id < 1)
-                throw new ArgumentOutOfRangeException(nameof(id));
-
-            var entry = await _context
-                .TopicGroups
-                .Include(x=>x.Topics)
-                .FirstOrDefaultAsync(x => x.Id.Equals(id));
-
-            if (entry?.Topics.Count > 0)
-                throw new Exception("Can't remove not empty Topics Group");
-
-            _context.Remove(entry);
+            _context.Remove(new TopicGroup() {
+                Id = id
+            });
 
             await _context.SaveChangesAsync();
         }
