@@ -12,6 +12,7 @@ namespace TssT.DataAccess
             CreateMap<Core.Models.Topic, Entities.Topic>().ReverseMap();
             CreateMap<Core.Models.LevelImportance, Entities.LevelImportance>().ReverseMap();
             CreateMap<Core.Models.LevelKnowledge, Entities.LevelKnowledge>().ReverseMap();
+            CreateMap<Core.Models.User, Entities.User>().ReverseMap();
         }
     }
 }

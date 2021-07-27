@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TssT.Businesslogic.Services;
+using TssT.Core.Interfaces;
 using TssT.DataAccess;
 using TssT.DataAccess.Entities;
 
@@ -38,6 +41,8 @@ namespace TssT.API
                 conf.AddProfile<DataAccessMappingProfile>();
             });
 
+            //In combination with UseDeveloperExceptionPage, this captures database-related exceptions that can be resolved by using Entity Framework migrations.
+            //When these exceptions occur, an HTML response with details about possible actions to resolve the issue is generated.
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             // services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -49,6 +54,38 @@ namespace TssT.API
             //
             //services.AddAuthentication().AddIdentityServerJwt();
 
+            services.AddTransient<IUserService, UserService>();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    // валидируется ли издатель токена
+                    ValidateIssuer = true,
+                    // издатель
+                    ValidIssuer = AuthOptions.ISSUER,
+
+                    // валидируется ли потребитель токена
+                    ValidateAudience = true,
+                    // потребитель токена
+                    ValidAudience = AuthOptions.AUDIENCE,
+
+                    // валидация времени существования токена
+                    ValidateLifetime = true,
+
+                    // валидируется ли ключ безопасности
+                    ValidateIssuerSigningKey = true,
+                    // ключ безопасности
+                    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey()
+                };
+            });
+
             services.AddControllers();
 
             services.AddSwaggerGen(options =>
@@ -58,7 +95,9 @@ namespace TssT.API
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =
-                        "JWT Authorization header using the Bearer scheme. \r\n\r\nEnter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                        "JWT Authorization header using the Bearer scheme."+
+                        "\r\n\r\nEnter 'Bearer' [space] and then your token in the text input below." +
+                        "\r\n\r\nExample: \"Bearer 12345abcdef\"",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
@@ -99,7 +138,6 @@ namespace TssT.API
 
             app.UseHttpsRedirection();
             //app.UseStaticFiles();
-
 
             app.UseRouting();
 
