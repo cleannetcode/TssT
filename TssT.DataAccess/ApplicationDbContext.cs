@@ -1,13 +1,15 @@
 ﻿using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using System;
 using TssT.DataAccess.Configurations;
 using TssT.DataAccess.Entities;
 
 namespace TssT.DataAccess
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<User>
+    public class ApplicationDbContext : IdentityDbContext<User, Role, string>
     {
         public DbSet<Answer> answers { get; set; }
         public DbSet<TopicGroup> TopicGroups { get; set; }
@@ -17,7 +19,7 @@ namespace TssT.DataAccess
         
         public ApplicationDbContext(
             DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options)
         {
             
         }

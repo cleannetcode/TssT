@@ -2,7 +2,7 @@
 
 namespace TssT.API.Contracts
 {
-    public class User : IdentityUser<string>
+    public class Role : IdentityRole<string>
     {
     }
 }

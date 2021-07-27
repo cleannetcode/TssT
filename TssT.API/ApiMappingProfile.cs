@@ -13,6 +13,7 @@ namespace TssT.API
             CreateMap<TopicCreate, Core.Models.Topic>().ReverseMap();
             CreateMap<LevelImportance, Core.Models.LevelImportance>().ReverseMap();
             CreateMap<LevelKnowledge, Core.Models.LevelKnowledge>().ReverseMap();
+            CreateMap<Role, Core.Models.Role>().ReverseMap();
         }
     }
 }
