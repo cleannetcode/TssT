@@ -10,7 +10,7 @@ namespace TssT.Core.Interfaces
     {
         Task<Core.Models.Role[]> GetAll();
         Task<bool> Update(string roleId, string newRoleName);
-        Task<bool> Delete(string roleId);
+        Task<bool> DeleteById(string roleId);
         Task<Core.Models.Role> Create(string roleName);
     }
 }

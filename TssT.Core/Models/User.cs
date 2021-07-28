@@ -2,7 +2,7 @@
 
 namespace TssT.Core.Models
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<string>
     {
     }
 }

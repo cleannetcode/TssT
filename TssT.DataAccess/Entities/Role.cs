@@ -3,7 +3,7 @@ using System;
 
 namespace TssT.DataAccess.Entities
 {
-    public class Role : IdentityRole
+    public class Role : IdentityRole<string>
     {
         public Role()
         {

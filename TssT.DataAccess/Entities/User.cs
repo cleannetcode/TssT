@@ -3,7 +3,7 @@ using System;
 
 namespace TssT.DataAccess.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<string>
     {
     }
 }

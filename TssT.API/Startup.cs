@@ -61,8 +61,7 @@ namespace TssT.API
                     options.Password.RequireLowercase = false;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddUserManager<UserManager<User>>()
-                .AddRoleManager<RoleManager<Role>>();
+                ;
 
             //services.AddIdentityServer().AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
             //

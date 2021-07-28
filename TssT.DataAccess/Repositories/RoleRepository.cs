@@ -11,7 +11,7 @@ namespace TssT.DataAccess.Repositories
     /// <summary>
     /// Класс репозиторий для доступа к Ролям
     /// </summary>
-    public class RoleRepository: IRoleRepository
+    public class RoleRepository : IRoleRepository
     {
         private readonly IMapper _mapper;
         private readonly ApplicationDbContext _applicationDbContext;
@@ -38,7 +38,8 @@ namespace TssT.DataAccess.Repositories
         {
             // _roleManager.Roles.ToListAsync(); не работает. почему ?
             var allRoles = await _applicationDbContext.Roles.ToListAsync();
-            return _mapper.Map<Core.Models.Role[]>(allRoles);
+            var result = _mapper.Map<Core.Models.Role[]>(allRoles);
+            return result;
         }
 
         /// <summary>
@@ -55,9 +56,13 @@ namespace TssT.DataAccess.Repositories
             if (String.IsNullOrWhiteSpace(newRoleName))
                 throw new ArgumentException(nameof(newRoleName));
 
-
             var roleForUpdate = await _roleManager.FindByIdAsync(roleId);
+
+            if (roleForUpdate == null)
+                return false;
+
             roleForUpdate.Name = newRoleName;
+
             var result = await _roleManager.UpdateAsync(roleForUpdate);
 
             return result.Succeeded;
@@ -71,6 +76,9 @@ namespace TssT.DataAccess.Repositories
         public async Task<bool> Delete(string roleId)
         {
             var roleForDelete = await _roleManager.FindByIdAsync(roleId);
+            if (roleForDelete == null)
+                return false;
+
             var result = await _roleManager.DeleteAsync(roleForDelete);
 
             return result.Succeeded;
@@ -86,7 +94,7 @@ namespace TssT.DataAccess.Repositories
             if (String.IsNullOrWhiteSpace(roleName))
                 throw new ArgumentException(nameof(roleName));
 
-            Entities.Role newRole = new Entities.Role(roleName);
+            Entities.Role newRole = new Entities.Role(roleName) { Id = Guid.NewGuid().ToString() };
 
             var result = await _roleManager.CreateAsync(newRole);
 

@@ -27,19 +27,26 @@ namespace TssT.API.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<Role[]> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var allRoles = await _roleService.GetAll();
-
-            return _mapper.Map<Role[]>(allRoles);
+            var result = _mapper.Map<Role[]>(allRoles);
+            return Ok(result);
         }
 
         [HttpPost("[action]")]
-        public async Task<Role> Create(NewRole newRole)
+        public async Task<IActionResult> Create(NewRole newRole)
         {
             var createdRole = await _roleService.Create(newRole.Name);
-            return _mapper.Map<Role>(createdRole);
+            var result = _mapper.Map<Role>(createdRole);
+            return Ok(result);
         }
 
+        [HttpGet("[action]")]
+        public async Task<IActionResult> DeleteById(string roleId)
+        {
+            var result = await _roleService.DeleteById(roleId);
+            return Ok(result);
+        }
     }
 }

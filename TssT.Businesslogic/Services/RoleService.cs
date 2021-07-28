@@ -18,7 +18,7 @@ namespace TssT.Businesslogic.Services
             return _roleRepository.Create(roleName);
         }
 
-        public Task<bool> Delete(string roleId)
+        public Task<bool> DeleteById(string roleId)
         {
             return _roleRepository.Delete(roleId);
         }

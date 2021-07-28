@@ -2,7 +2,7 @@
 
 namespace TssT.Core.Models
 {
-    public class Role : IdentityRole
+    public class Role : IdentityRole<string>
     {
     }
 }

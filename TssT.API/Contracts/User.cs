@@ -2,7 +2,7 @@
 
 namespace TssT.API.Contracts
 {
-    public class User : IdentityUser
+    public class User : IdentityUser<string>
     {
     }
 }
