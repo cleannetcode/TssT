@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace TssT.API.Contracts
 {
-    public class UserCredential
+    public class NewRole
     {
         public string Name { get; set; }
-        public string Password { get; set; }
     }
 }

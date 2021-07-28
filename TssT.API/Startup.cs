@@ -14,6 +14,7 @@ using TssT.Businesslogic.Services;
 using TssT.Core.Interfaces;
 using TssT.DataAccess;
 using TssT.DataAccess.Entities;
+using TssT.DataAccess.Repositories;
 
 namespace TssT.API
 {
@@ -32,7 +33,8 @@ namespace TssT.API
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlite(
+                    Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddAutoMapper(conf =>
@@ -48,13 +50,29 @@ namespace TssT.API
             // services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<User, Role>(
+                options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddUserManager<UserManager<User>>()
+                .AddRoleManager<RoleManager<Role>>();
 
             //services.AddIdentityServer().AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
             //
             //services.AddAuthentication().AddIdentityServerJwt();
 
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
 
             services.AddAuthentication(options =>
             {

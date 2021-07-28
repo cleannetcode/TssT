@@ -14,11 +14,11 @@ namespace TssT.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AuthController : ControllerBase
     {
         private readonly IUserService _accountService;
 
-        public AccountController(IUserService accountService)
+        public AuthController(IUserService accountService)
         {
             _accountService = accountService;
         }
@@ -31,7 +31,7 @@ namespace TssT.API.Controllers
             if (user != null )
             {
                 //TODO: get role from database
-                var role = "user";
+                var role = "User, Admin";
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, userCredential.Name),

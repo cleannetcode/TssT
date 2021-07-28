@@ -10,9 +10,9 @@ namespace TssT.Businesslogic.Services
 {
     public class UserService: IUserService
     {
-        private readonly IUsersRepository _usersRepository;
+        private readonly IUserRepository _usersRepository;
 
-        public UserService(IUsersRepository usersRepository)
+        public UserService(IUserRepository usersRepository)
         {
             _usersRepository = usersRepository;
         }

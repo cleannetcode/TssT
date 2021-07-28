@@ -3,7 +3,7 @@ using TssT.Core.Models;
 
 namespace TssT.Core.Interfaces
 {
-    public interface IUsersRepository
+    public interface IUserRepository
     {
         void Create(User newUser);
         void Update(User user);
