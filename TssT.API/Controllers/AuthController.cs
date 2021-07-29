@@ -17,10 +17,12 @@ namespace TssT.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserService _accountService;
+        private readonly IRoleService _roleService;
 
-        public AuthController(IUserService accountService)
+        public AuthController(IUserService accountService,IRoleService roleService)
         {
             _accountService = accountService;
+            _roleService = roleService;
         }
 
         [HttpPost("/token")]

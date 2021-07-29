@@ -20,10 +20,11 @@ namespace TssT.DataAccess.Repositories
         private readonly UserManager<Entities.User> _userManager;
         private readonly SignInManager<Entities.User> _signInManager;
 
+
         public UserRepository(IMapper mapper,
             ApplicationDbContext applicationDbContext,
             UserManager<Entities.User> userManager,
-            SignInManager<Entities.User> signInManager
+            SignInManager<Entities.User> signInManager,
         )
         {
             _mapper = mapper;
@@ -32,24 +33,71 @@ namespace TssT.DataAccess.Repositories
             _signInManager = signInManager;
         }
 
-        public void Create(Core.Models.User newUser)
+        /// <summary>
+        /// Создать пользователя.
+        /// </summary>
+        /// <param name="newUser">Пользователь для создания.</param>
+        /// <returns>Созданный пользователь или null.</returns>
+        public async Task<User> Create(User newUser)
         {
-            //_applicationDbContext.Users.Add();
+            Entities.User userForCreate = _mapper.Map<Entities.User>(newUser);
+            userForCreate.Id = Guid.NewGuid().ToString();
+
+            var result = await _userManager.CreateAsync(userForCreate);
+
+            if (result.Succeeded)
+                return _mapper.Map<User>(userForCreate);
+            else
+                return null;
         }
 
-        public void Update(User user)
+        /// <summary>
+        /// Обновить пользователя.
+        /// </summary>
+        /// <param name="user">Пользователь.</param>
+        /// <returns>Результат обновления. true - успешно обновлено, false - обновление не состоялось.</returns>
+        public async Task<bool> Update(User user)
         {
-            throw new System.NotImplementedException();
+            if (user == null)
+                throw new ArgumentException(nameof(user));
+
+            var userForUpdate = _mapper.Map<Entities.User>(user);
+            var result = await _userManager.UpdateAsync(userForUpdate);
+            return result.Succeeded;
         }
 
-        public void Delete(User user)
+        /// <summary>
+        /// Удалить пользователя по Id
+        /// </summary>
+        /// <param name="userId">Id пользователя.</param>
+        /// <returns>Результат удаления. true - успешно удалён, false - не удалён.</returns>
+        public async Task<bool> Delete(string userId)
         {
-            throw new System.NotImplementedException();
+            var userForDelete = await _userManager.FindByIdAsync(userId);
+            if (userForDelete == null)
+                return false;
+
+            var result = await _userManager.DeleteAsync(userForDelete);
+            return result.Succeeded;
         }
 
-        public User GetById(int userId)
+        /// <summary>
+        /// Получить пользователя по id.
+        /// </summary>
+        /// <param name="userId">id пользователя.</param>
+        /// <returns>Запись пользователя.</returns>
+        public async Task<User> GetById(string userId)
         {
-            throw new System.NotImplementedException();
+            if (String.IsNullOrWhiteSpace(userId))
+                throw new ArgumentException(nameof(userId));
+
+            var user = await _userManager
+                .Users
+                .Where(u => u.Id == userId)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
+
+            return _mapper.Map<User>(user);
         }
 
         /// <summary>
@@ -79,18 +127,6 @@ namespace TssT.DataAccess.Repositories
                 return _mapper.Map<User>(user);
             else
                 return null;
-        }
-
-        /// <summary>
-        /// Получить роли пользователя.
-        /// </summary>
-        /// <param name="user">Пользователь чьи роли необходимо получить.</param>
-        /// <returns></returns>
-        public async Task<List<string>> GetUserRole(Entities.User user)
-        {
-            IList<string> roles = await _userManager.GetRolesAsync(user);
-
-            return new List<string>(roles);
         }
     }
 }

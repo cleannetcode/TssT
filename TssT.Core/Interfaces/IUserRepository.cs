@@ -1,14 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using TssT.Core.Models;
 
 namespace TssT.Core.Interfaces
 {
     public interface IUserRepository
     {
-        void Create(User newUser);
-        void Update(User user);
-        void Delete(User user);
-        User GetById(int userId);
+        Task<User> Create(User newUser);
+        Task<bool> Update(User user);
+        Task<bool> Delete(string userId);
+        Task<User> GetById(string userId);
         Task<User> GetByNameAndPassword(string userName, string userPassword);
+        Task<List<string>> GetUserRoles(User user);
     }
 }
