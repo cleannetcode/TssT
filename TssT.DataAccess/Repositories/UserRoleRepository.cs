@@ -13,7 +13,7 @@ namespace TssT.DataAccess.Repositories
     /// <summary>
     /// Класс репозиторий для ролей пользователя.
     /// </summary>
-    public class UserRoleRepository
+    public class UserRoleRepository: IUserRoleRepository
     {
         private readonly IMapper _mapper;
         private readonly UserManager<Entities.User> _userManager;

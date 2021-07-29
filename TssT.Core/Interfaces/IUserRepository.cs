@@ -11,6 +11,5 @@ namespace TssT.Core.Interfaces
         Task<bool> Delete(string userId);
         Task<User> GetById(string userId);
         Task<User> GetByNameAndPassword(string userName, string userPassword);
-        Task<List<string>> GetUserRoles(User user);
     }
 }

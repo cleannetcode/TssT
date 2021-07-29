@@ -18,20 +18,22 @@ namespace TssT.API.Controllers
     {
         private readonly IUserService _accountService;
         private readonly IRoleService _roleService;
+        private readonly IUserRoleService _userRoleService;
 
-        public AuthController(IUserService accountService,IRoleService roleService)
+        public AuthController(IUserService accountService, IRoleService roleService, IUserRoleService userRoleService)
         {
             _accountService = accountService;
             _roleService = roleService;
+            _userRoleService = userRoleService;
         }
 
         [HttpPost("/token")]
         public async Task<IActionResult> Token(UserCredential userCredential)
         {
-            /*var user = await _accountService.GetByNameAndPassword(userCredential.Name, userCredential.Password);
+            var user = await _accountService.GetByNameAndPassword(userCredential.Name, userCredential.Password);
 
-            if (user != null )
-            {*/
+            if (user != null)
+            {
                 //TODO: get role from database
                 var role = "Admin";
                 var claims = new List<Claim>
@@ -57,11 +59,11 @@ namespace TssT.API.Controllers
                 var tokenString = tokenHandler.WriteToken(token);
 
                 return Ok(new { Token = tokenString });
-           /* }
+            }
             else
             {
-                return Unauthorized("failed, try again");
-            }*/
+                return Unauthorized("Authorize is failed.");
+            }
         }
     }
 }
