@@ -73,6 +73,9 @@ namespace TssT.API
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IRoleRepository, RoleRepository>();
 
+            services.AddTransient<IUserRoleService, UserRoleService>();
+            services.AddTransient<IUserRoleRepository, UserRoleRepository>();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

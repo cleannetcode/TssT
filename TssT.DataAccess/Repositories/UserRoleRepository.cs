@@ -34,11 +34,11 @@ namespace TssT.DataAccess.Repositories
         /// </summary>
         /// <param name="user">Пользователь чьи роли необходимо получить.</param>
         /// <returns>Список ролей.</returns>
-        public async Task<List<string>> GetUserRoles(User user)
+        public async Task<List<string>> GetUserRoles(string userId)
         {
-            var userForSearch = _mapper.Map<Entities.User>(user);
+            var user = await _userManager.FindByIdAsync(userId);
 
-            IList<string> roles = await _userManager.GetRolesAsync(userForSearch);
+            IList<string> roles = await _userManager.GetRolesAsync(user);
 
             return new List<string>(roles);
         }
@@ -47,8 +47,8 @@ namespace TssT.DataAccess.Repositories
         /// Добавить роль пользователю.
         /// </summary>
         /// <param name="userId">Идентификатор пользователя.</param>
-        /// <param name="roleId">Имя роли.</param>
-        /// <returns></returns>
+        /// <param name="roleId">Идентификатор роли.</param>
+        /// <returns>Результат добавления. True-успешно, False-неуспешно.</returns>
         public async Task<bool> AddRoleToUser(string userId, string roleId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -60,6 +60,26 @@ namespace TssT.DataAccess.Repositories
                 return false;
 
             var result = await _userManager.AddToRoleAsync(user, role.Name);
+            return result.Succeeded;
+        }
+
+        /// <summary>
+        /// Снять роль с пользователя.
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <param name="roleId">Идентификатор роли.</param>
+        /// <returns>Результат удаления. True-успешно, False-неуспешно.</returns>
+        public async Task<bool> RemoveRoleFromUser(string userId, string roleId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return false;
+
+            var role = await _roleManager.FindByIdAsync(roleId);
+            if (role == null)
+                return false;
+
+            var result = await _userManager.RemoveFromRoleAsync(user, role.Name);
             return result.Succeeded;
         }
     }

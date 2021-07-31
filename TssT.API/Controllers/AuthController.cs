@@ -12,6 +12,9 @@ using TssT.Core.Interfaces;
 
 namespace TssT.API.Controllers
 {
+    /// <summary>
+    /// Контроллер авторизации.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -27,6 +30,11 @@ namespace TssT.API.Controllers
             _userRoleService = userRoleService;
         }
 
+        /// <summary>
+        /// Получить токен для доступа к API.
+        /// </summary>
+        /// <param name="userCredential">Учетные данные пользователя.</param>
+        /// <returns>Bearer токен.</returns>
         [HttpPost("/token")]
         public async Task<IActionResult> Token(UserCredential userCredential)
         {
@@ -34,12 +42,13 @@ namespace TssT.API.Controllers
 
             if (user != null)
             {
-                //TODO: get role from database
-                var role = "Admin";
+                var roles = await _userRoleService.GetUserRoles(user.Id);
+                var rolesString = String.Join(",", roles);
+                
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, userCredential.Name), // ClaimTypes.Name
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, userCredential.Name),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, rolesString)
                 };
 
                 var symmetricSecurityKey = AuthOptions.GetSymmetricSecurityKey();

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TssT.Core.Interfaces;
@@ -20,11 +19,10 @@ namespace TssT.DataAccess.Repositories
         private readonly UserManager<Entities.User> _userManager;
         private readonly SignInManager<Entities.User> _signInManager;
 
-
         public UserRepository(IMapper mapper,
             ApplicationDbContext applicationDbContext,
             UserManager<Entities.User> userManager,
-            SignInManager<Entities.User> signInManager,
+            SignInManager<Entities.User> signInManager
         )
         {
             _mapper = mapper;
@@ -38,12 +36,12 @@ namespace TssT.DataAccess.Repositories
         /// </summary>
         /// <param name="newUser">Пользователь для создания.</param>
         /// <returns>Созданный пользователь или null.</returns>
-        public async Task<User> Create(User newUser)
+        public async Task<User> Create(User newUser, string password)
         {
             Entities.User userForCreate = _mapper.Map<Entities.User>(newUser);
             userForCreate.Id = Guid.NewGuid().ToString();
 
-            var result = await _userManager.CreateAsync(userForCreate);
+            var result = await _userManager.CreateAsync(userForCreate, password);
 
             if (result.Succeeded)
                 return _mapper.Map<User>(userForCreate);
@@ -71,7 +69,7 @@ namespace TssT.DataAccess.Repositories
         /// </summary>
         /// <param name="userId">Id пользователя.</param>
         /// <returns>Результат удаления. true - успешно удалён, false - не удалён.</returns>
-        public async Task<bool> Delete(string userId)
+        public async Task<bool> DeleteById(string userId)
         {
             var userForDelete = await _userManager.FindByIdAsync(userId);
             if (userForDelete == null)
@@ -127,6 +125,17 @@ namespace TssT.DataAccess.Repositories
                 return _mapper.Map<User>(user);
             else
                 return null;
+        }
+
+        /// <summary>
+        /// Получить список всех пользователей.
+        /// </summary>
+        /// <returns>Пользователи системы.</returns>
+        public async Task<User[]> GetAll()
+        {
+            var users = await _userManager.Users.ToListAsync();
+
+            return _mapper.Map<Core.Models.User[]>(users);
         }
     }
 }

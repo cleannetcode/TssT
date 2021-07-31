@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using TssT.API.Contracts;
 using TssT.Core.Interfaces;
 
 namespace TssT.API.Controllers
 {
+    /// <summary>
+    /// Контроллер для управления ролями.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RolesController : ControllerBase
@@ -26,6 +22,10 @@ namespace TssT.API.Controllers
             _roleService = roleService;
         }
 
+        /// <summary>
+        /// Получить список всех доступных ролей.
+        /// </summary>
+        /// <returns>Список ролей.</returns>
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
@@ -34,6 +34,11 @@ namespace TssT.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Создать новую роль.
+        /// </summary>
+        /// <param name="newRole">Имя роли.</param>
+        /// <returns>Созданная роль.</returns>
         [HttpPost("[action]")]
         public async Task<IActionResult> Create(NewRole newRole)
         {
@@ -42,6 +47,11 @@ namespace TssT.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Удалить роль по идентификатору.
+        /// </summary>
+        /// <param name="roleId">Идентификатор роли.</param>
+        /// <returns>Результат удаления. True-успешно, False-неуспешно.</returns>
         [HttpGet("[action]")]
         public async Task<IActionResult> DeleteById(string roleId)
         {

@@ -18,6 +18,36 @@ namespace TssT.Businesslogic.Services
         }
 
         /// <summary>
+        /// Создать пользователя.
+        /// </summary>
+        /// <param name="userForCreate">Пользователь.</param>
+        /// <param name="password">Пароль пользователя.</param>
+        /// <returns>Созданный пользователь.</returns>
+        public Task<User> Create(User userForCreate, string password)
+        {
+            return _usersRepository.Create(userForCreate, password);
+        }
+
+        /// <summary>
+        /// Удалить пользователя по идентификатору.
+        /// </summary>
+        /// <param name="userId">Идентификатор пользователя.</param>
+        /// <returns>true - успешно удалён, false - не удалён.</returns>
+        public Task<bool> DeleteById(string userId)
+        {
+            return _usersRepository.DeleteById(userId);
+        }
+
+        /// <summary>
+        /// Получить список всех пользователей.
+        /// </summary>
+        /// <returns></returns>
+        public Task<User[]> GetAll()
+        {
+            return _usersRepository.GetAll();
+        }
+
+        /// <summary>
         /// Проверяем является ли пользователь аутентифицированным (логин принадлежит владельцу (по паролю)).
         /// </summary>
         /// <param name="userName">Имя пользователя.</param>

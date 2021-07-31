@@ -8,7 +8,7 @@ using TssT.Core.Models;
 
 namespace TssT.Businesslogic.Services
 {
-    public class UserRoleService
+    public class UserRoleService : IUserRoleService
     {
         private readonly IUserRoleRepository _userRoleRepository;
 
@@ -17,9 +17,19 @@ namespace TssT.Businesslogic.Services
             _userRoleRepository = userRoleRepository;
         }
 
-        public async Task<List<string>> GetUserRoles(User user)
+        public async Task<List<string>> GetUserRoles(string userId)
         {
-            return await _userRoleRepository.GetUserRoles(user);
+            return await _userRoleRepository.GetUserRoles(userId);
+        }
+
+        public Task<bool> AddRoleToUser(string userId, string roleId)
+        {
+            return _userRoleRepository.AddRoleToUser(userId, roleId);
+        }
+
+        public Task<bool> RemoveRoleFromUser(string userId, string roleId)
+        {
+            return _userRoleRepository.RemoveRoleFromUser(userId, roleId);
         }
     }
 }
