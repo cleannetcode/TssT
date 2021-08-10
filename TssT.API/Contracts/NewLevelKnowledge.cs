@@ -1,6 +1,6 @@
 ﻿namespace TssT.API.Contracts
 {
-    public class LevelKnowledgeCreate
+    public class NewLevelKnowledge
     {
         /// <summary>
         /// Наименование
