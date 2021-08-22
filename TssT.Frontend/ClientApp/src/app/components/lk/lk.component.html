@@ -1,0 +1,27 @@
+<div class="lk__inner">
+  <div class="lk__main">
+    <div class="lk__content">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="lk__sidebar">
+
+      <mat-card class="lk__profile">
+        <mat-card-header>
+          <div mat-card-avatar class="lk__profile-image" [attr.data-image]="currentUser.image"></div>
+          <mat-card-title> {{ currentUser.login }}</mat-card-title>
+          <mat-card-subtitle></mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-nav-list>
+        <a mat-list-item routerLink="{{ item.route }}" *ngFor="let item of navMenu">
+          <mat-icon color="primary" mat-list-icon>{{ item.icon }}</mat-icon>
+          <span matLine>{{item.text}}</span>
+        </a>
+      </mat-nav-list>
+
+    </div>
+  </div>
+</div>
