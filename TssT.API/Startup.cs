@@ -1,20 +1,14 @@
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication;
+using System.IO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-/*using TssT.Businesslogic.Services;
-using TssT.Core.Interfaces;*/
 using TssT.DataAccess;
-//using TssT.DataAccess.Entities;
-using TssT.DataAccess.Repositories;
 
 namespace TssT.API
 {
@@ -32,7 +26,6 @@ namespace TssT.API
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -47,9 +40,6 @@ namespace TssT.API
             //When these exceptions occur, an HTML response with details about possible actions to resolve the issue is generated.
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            // services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //     .AddEntityFrameworkStores<ApplicationDbContext>();
-
             services.AddIdentity<DataAccess.Entities.User, DataAccess.Entities.Role>(
                 options =>
                 {
@@ -60,21 +50,7 @@ namespace TssT.API
                     options.Password.RequireUppercase = false;
                     options.Password.RequireLowercase = false;
                 })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                ;
-
-            //services.AddIdentityServer().AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-            //
-            //services.AddAuthentication().AddIdentityServerJwt();
-
-            /*services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IUserRepository, UserRepository>();
-
-            services.AddTransient<IRoleService, RoleService>();
-            services.AddTransient<IRoleRepository, RoleRepository>();
-
-            services.AddTransient<IUserRoleService, UserRoleService>();
-            services.AddTransient<IUserRoleRepository, UserRoleRepository>();*/
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAuthentication(options =>
             {
@@ -124,6 +100,8 @@ namespace TssT.API
                     Scheme = "Bearer"
                 });
 
+                options.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "TssT.API.xml"));
+
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
                     {
@@ -157,12 +135,11 @@ namespace TssT.API
             }
 
             app.UseHttpsRedirection();
-            //app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
-            // app.UseIdentityServer();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

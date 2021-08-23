@@ -12,6 +12,8 @@ namespace TssT.API
             CreateMap<TopicCreate, Core.Models.Topic>().ReverseMap();
             CreateMap<LevelImportance, Core.Models.LevelImportance>().ReverseMap();
             CreateMap<LevelKnowledge, Core.Models.LevelKnowledge>().ReverseMap();
+            CreateMap<DataAccess.Entities.User, Contracts.User>().ReverseMap();
+            CreateMap<DataAccess.Entities.Role, Contracts.Role>().ReverseMap();
         }
     }
 }

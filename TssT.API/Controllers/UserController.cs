@@ -1,17 +1,14 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
+using System.Net;
 using System.Threading.Tasks;
 using TssT.API.Contracts;
-using TssT.Core.Interfaces;
 
 namespace TssT.API.Controllers
 {
@@ -20,15 +17,12 @@ namespace TssT.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;
-        //private readonly IUserService _userService;
         private readonly UserManager<DataAccess.Entities.User> _userManager;
 
         public UserController(IMapper mapper, 
-            //IUserService userService, 
             UserManager<DataAccess.Entities.User> userManager)
         {
             _mapper = mapper;
-            //_userService = userService;
             _userManager = userManager;
         }
 
@@ -37,11 +31,12 @@ namespace TssT.API.Controllers
         /// </summary>
         /// <returns>Пользователи системы.</returns>
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(List<Contracts.User>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll()
         {
             var users = await _userManager.Users.ToListAsync();
-
-            return Ok(users);
+            var contractUsers = _mapper.Map<List<Contracts.User>>(users);
+            return Ok(contractUsers);
         }
 
         /// <summary>
@@ -50,8 +45,13 @@ namespace TssT.API.Controllers
         /// <param name="user">Пользователь для создания.</param>
         /// <returns>Созданный пользователь или null.</returns>
         [HttpPost("[action]")]
+        [ProducesResponseType(typeof(Contracts.User), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Create(NewUser user)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
+
             DataAccess.Entities.User userForCreate = new DataAccess.Entities.User()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -59,11 +59,12 @@ namespace TssT.API.Controllers
                 Email = user.Email
             };
             IdentityResult result = await _userManager.CreateAsync(userForCreate, user.Password);
+            var contractUser = _mapper.Map<Contracts.User>(userForCreate);
 
             if (result.Succeeded)
-                return Ok(userForCreate);
+                return Ok(contractUser);
             else
-                return BadRequest();    //выбрать тип для ошибки во время создания пользователя.
+                return BadRequest("User not created.");
         }
 
         /// <summary>
@@ -72,18 +73,23 @@ namespace TssT.API.Controllers
         /// <param name="userId">Id пользователя.</param>
         /// <returns></returns>
         [HttpGet("[action]")]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> DeleteById(string userId)
         {
-            //bool result = await _userService.DeleteById(userId);
+            if (String.IsNullOrWhiteSpace(userId))
+                return BadRequest(nameof(userId) + " is not set");
+
             var userForDelete = await _userManager.FindByIdAsync(userId);
             if (userForDelete == null)
                 return BadRequest("User not found");
 
             var result = await _userManager.DeleteAsync(userForDelete);
+
             if (result.Succeeded)
-                return Ok(result);
+                return Ok();
             else
-                return BadRequest();
+                return BadRequest("User not deleted");
         }
     }
 }

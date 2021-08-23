@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TssT.API.Contracts;
@@ -36,9 +37,15 @@ namespace TssT.API.Controllers
         /// </summary>
         /// <param name="userCredential">Учетные данные пользователя.</param>
         /// <returns>Bearer токен.</returns>
-        [HttpPost("/token")]
-        public async Task<IActionResult> Token(UserCredential userCredential)
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(TokenContract), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.Unauthorized)]
+        public async Task<IActionResult> GetToken(UserCredential userCredential)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             var user = await GetByNameAndPassword(userCredential.Name, userCredential.Password);
 
             if (user != null)
@@ -69,7 +76,7 @@ namespace TssT.API.Controllers
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 var tokenString = tokenHandler.WriteToken(token);
 
-                return Ok(new { Token = tokenString });
+                return Ok(new TokenContract{ Token = tokenString });
             }
             else
             {
