@@ -1,5 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using TssT.API.Contracts;
 using TssT.Core.Interfaces;
@@ -14,12 +17,12 @@ namespace TssT.API.Controllers
     public class RolesController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IRoleService _roleService;
+        private readonly RoleManager<DataAccess.Entities.Role> _roleManager;
 
-        public RolesController(IMapper mapper,IRoleService roleService)
+        public RolesController(IMapper mapper, RoleManager<DataAccess.Entities.Role> roleManager)
         {
             _mapper = mapper;
-            _roleService = roleService;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -29,9 +32,8 @@ namespace TssT.API.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAll()
         {
-            var allRoles = await _roleService.GetAll();
-            var result = _mapper.Map<Role[]>(allRoles);
-            return Ok(result);
+            var allRoles = await _roleManager.Roles.ToListAsync();
+            return Ok(allRoles);
         }
 
         /// <summary>
@@ -42,9 +44,22 @@ namespace TssT.API.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> Create(NewRole newRole)
         {
-            var createdRole = await _roleService.Create(newRole.Name);
+            /*var createdRole = await _roleService.Create(newRole.Name);
             var result = _mapper.Map<Role>(createdRole);
-            return Ok(result);
+            return Ok(result);*/
+
+            DataAccess.Entities.Role newRoleEntity = new DataAccess.Entities.Role(newRole.Name) { Id = Guid.NewGuid().ToString() };
+
+            var result = await _roleManager.CreateAsync(newRoleEntity);
+
+            if (result.Succeeded)
+            {
+                var createdRole = await _roleManager.FindByNameAsync(newRole.Name);
+
+                return Ok(createdRole);
+            }
+            else
+                return BadRequest();
         }
 
         /// <summary>
@@ -55,8 +70,14 @@ namespace TssT.API.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> DeleteById(string roleId)
         {
-            var result = await _roleService.DeleteById(roleId);
-            return Ok(result);
+            var roleForDelete = await _roleManager.FindByIdAsync(roleId);
+
+            var result = await _roleManager.DeleteAsync(roleForDelete);
+
+            if (result.Succeeded)
+                return Ok();
+            else
+                return BadRequest();
         }
     }
 }

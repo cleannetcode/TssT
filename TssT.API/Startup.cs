@@ -10,10 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using TssT.Businesslogic.Services;
-using TssT.Core.Interfaces;
+/*using TssT.Businesslogic.Services;
+using TssT.Core.Interfaces;*/
 using TssT.DataAccess;
-using TssT.DataAccess.Entities;
+//using TssT.DataAccess.Entities;
 using TssT.DataAccess.Repositories;
 
 namespace TssT.API
@@ -50,7 +50,7 @@ namespace TssT.API
             // services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
             //     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentity<User, Role>(
+            services.AddIdentity<DataAccess.Entities.User, DataAccess.Entities.Role>(
                 options =>
                 {
                     options.Password.RequireDigit = false;
@@ -67,14 +67,14 @@ namespace TssT.API
             //
             //services.AddAuthentication().AddIdentityServerJwt();
 
-            services.AddTransient<IUserService, UserService>();
+            /*services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IRoleRepository, RoleRepository>();
 
             services.AddTransient<IUserRoleService, UserRoleService>();
-            services.AddTransient<IUserRoleRepository, UserRoleRepository>();
+            services.AddTransient<IUserRoleRepository, UserRoleRepository>();*/
 
             services.AddAuthentication(options =>
             {

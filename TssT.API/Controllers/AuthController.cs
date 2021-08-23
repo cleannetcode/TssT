@@ -1,14 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TssT.API.Contracts;
-using TssT.Core.Interfaces;
 
 namespace TssT.API.Controllers
 {
@@ -19,15 +18,17 @@ namespace TssT.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IUserService _accountService;
-        private readonly IRoleService _roleService;
-        private readonly IUserRoleService _userRoleService;
+        private readonly IMapper _mapper;
+        private readonly UserManager<DataAccess.Entities.User> _userManager;
+        private readonly SignInManager<DataAccess.Entities.User> _signInManager;
 
-        public AuthController(IUserService accountService, IRoleService roleService, IUserRoleService userRoleService)
+        public AuthController(IMapper mapper,
+            UserManager<DataAccess.Entities.User> userManager,
+            SignInManager<DataAccess.Entities.User> signInManager)
         {
-            _accountService = accountService;
-            _roleService = roleService;
-            _userRoleService = userRoleService;
+            _mapper = mapper;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         /// <summary>
@@ -38,13 +39,14 @@ namespace TssT.API.Controllers
         [HttpPost("/token")]
         public async Task<IActionResult> Token(UserCredential userCredential)
         {
-            var user = await _accountService.GetByNameAndPassword(userCredential.Name, userCredential.Password);
+            var user = await GetByNameAndPassword(userCredential.Name, userCredential.Password);
 
             if (user != null)
             {
-                var roles = await _userRoleService.GetUserRoles(user.Id);
+                IList<string> roles = await _userManager.GetRolesAsync(user);
+
                 var rolesString = String.Join(",", roles);
-                
+
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, userCredential.Name),
@@ -73,6 +75,27 @@ namespace TssT.API.Controllers
             {
                 return Unauthorized("Authorize is failed.");
             }
+        }
+
+        /// <summary>
+        /// Получить пользователя по имени и паролю.
+        /// </summary>
+        /// <param name="userName">Имя пользователя.</param>
+        /// <param name="userPassword">Пароль пользователя.</param>
+        /// <returns>Возвращает пользователя.</returns>
+        private async Task<DataAccess.Entities.User> GetByNameAndPassword(string userName, string userPassword)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+
+            if (user == null)
+                return null;
+
+            var signInResult = await _signInManager.CheckPasswordSignInAsync(user, userPassword, false);
+
+            if (signInResult.Succeeded)
+                return user;
+            else
+                return null;
         }
     }
 }

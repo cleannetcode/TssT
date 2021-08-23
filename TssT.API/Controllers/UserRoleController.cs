@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TssT.API.Contracts;
 using TssT.Core.Interfaces;
@@ -14,12 +16,17 @@ namespace TssT.API.Controllers
     public class UserRoleController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IUserRoleService _userRoleService;
+        private readonly UserManager<DataAccess.Entities.User> _userManager;
+        private readonly RoleManager<DataAccess.Entities.Role> _roleManager;
 
-        public UserRoleController(IMapper mapper, IUserRoleService userRoleService)
+        public UserRoleController(
+            IMapper mapper, 
+            UserManager<DataAccess.Entities.User> userManager, 
+            RoleManager<DataAccess.Entities.Role> roleManager)
         {
             _mapper = mapper;
-            _userRoleService = userRoleService;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -30,10 +37,15 @@ namespace TssT.API.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetUserRoles(string userId)
         {
-            var result = await _userRoleService.GetUserRoles(userId);
-            return Ok(result);
-        }
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return BadRequest();
 
+            IList<string> rolesIList = await _userManager.GetRolesAsync(user);
+            var roles = new List<string>(rolesIList);
+            return Ok(roles);
+        }
+        
         /// <summary>
         /// Добавить роль для пользователя.
         /// </summary>
@@ -42,20 +54,42 @@ namespace TssT.API.Controllers
         [HttpPost("[action]")]
         public async Task<IActionResult> AddRoleToUser(UserRole userRole)
         {
-            var result = await _userRoleService.AddRoleToUser(userRole.UserId, userRole.RoleId);
-            return Ok(result);
-        }
+            var user = await _userManager.FindByIdAsync(userRole.UserId);
+            if (user == null)
+                return BadRequest();
 
+            var role = await _roleManager.FindByIdAsync(userRole.RoleId);
+            if (role == null)
+                return BadRequest();
+
+            var result = await _userManager.AddToRoleAsync(user, role.Name);
+            if (result.Succeeded)
+                return Ok();
+            else
+                return BadRequest();
+        }
+        
         /// <summary>
         /// Снять роль пользователю.
         /// </summary>
         /// <param name="userRole">Идентификатор роли и пользователя.</param>
-        /// <returns>Результат операции. True-успешно, False-неуспешно.</returns>
+        /// <returns>Результат операции Ok или BadRequest.</returns>
         [HttpPost("[action]")]
         public async Task<IActionResult> RemoveRoleFromUser(UserRole userRole)
         {
-            var result = await _userRoleService.RemoveRoleFromUser(userRole.UserId, userRole.RoleId);
-            return Ok(result);
+            var user = await _userManager.FindByIdAsync(userRole.UserId);
+            if (user == null)
+                return BadRequest("User not found.");
+
+            var role = await _roleManager.FindByIdAsync(userRole.RoleId);
+            if (role == null)
+                return BadRequest("Role not found");
+
+            var result = await _userManager.RemoveFromRoleAsync(user, role.Name);
+            if (result.Succeeded)
+                return Ok();
+            else
+                return BadRequest();
         }
     }
 }
