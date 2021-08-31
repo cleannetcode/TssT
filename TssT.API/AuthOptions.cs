@@ -1,15 +1,10 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TssT.API
 {
-    
     /// <summary>
-    /// Класс для генерации токена. Необходимо перенести в secrets секретный ключ.
+    /// Класс для генерации токена.
     /// </summary>
     public class AuthOptions
     {
@@ -24,14 +19,14 @@ namespace TssT.API
         public const string AUDIENCE = "TssT.Frontend"; 
 
         /// <summary>
-        /// Ключ для шифрования.
-        /// </summary>
-        const string KEY = "mysupersecret_secretkey!123";
-
-        /// <summary>
         /// Время жизни токена в минутах
         /// </summary>
         public const int LIFETIME = 100;
+
+        /// <summary>
+        /// Ключ для шифрования.
+        /// </summary>
+        public static string Key { get; set; } 
 
         /// <summary>
         /// Returns a new instance of Microsoft.IdentityModel.Tokens.SymmetricSecurityKey
@@ -39,7 +34,7 @@ namespace TssT.API
         /// <returns></returns>
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
-            return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));
+            return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Key));
         }
     }
 }

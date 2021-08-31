@@ -3,6 +3,7 @@
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
 	<IsPackable>false</IsPackable>
+	<UserSecretsId>bc349147-2683-426c-8a61-7d881a0935e3</UserSecretsId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
