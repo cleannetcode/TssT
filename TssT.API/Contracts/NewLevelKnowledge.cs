@@ -1,8 +1,7 @@
-﻿namespace TssT.DataAccess.Entities
+﻿namespace TssT.API.Contracts
 {
-    public class LevelKnowledge
+    public class NewLevelKnowledge
     {
-        public int Id { get; set; }
         /// <summary>
         /// Наименование
         /// </summary>

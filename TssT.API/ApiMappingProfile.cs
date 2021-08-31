@@ -8,10 +8,10 @@ namespace TssT.API
         public ApiMappingProfile()
         {
             CreateMap<Answer, Core.Models.Answer>().ReverseMap();
-            CreateMap<TopicGroupCreate, Core.Models.TopicGroup>().ReverseMap();
-            CreateMap<TopicCreate, Core.Models.Topic>().ReverseMap();
+            CreateMap<NewTopicGroup, Core.Models.TopicGroup>().ReverseMap();
+            CreateMap<NewTopic, Core.Models.Topic>().ReverseMap();
             CreateMap<LevelImportance, Core.Models.LevelImportance>().ReverseMap();
-            CreateMap<LevelKnowledge, Core.Models.LevelKnowledge>().ReverseMap();
+            CreateMap<NewLevelKnowledge, Core.Models.LevelKnowledge>().ReverseMap();
             CreateMap<DataAccess.Entities.User, Contracts.User>().ReverseMap();
             CreateMap<DataAccess.Entities.Role, Contracts.Role>().ReverseMap();
         }

@@ -1,6 +1,6 @@
 ﻿namespace TssT.API.Contracts
 {
-    public class TopicCreate
+    public class NewTopic
     {
         public string Name { get; set; }
     }
