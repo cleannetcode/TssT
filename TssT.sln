@@ -1,14 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.API", "TssT.API\TssT.API.csproj", "{B4C084B4-8A83-4814-A245-B52DDE16552B}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TssT.API", "TssT.API\TssT.API.csproj", "{B4C084B4-8A83-4814-A245-B52DDE16552B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.Core", "TssT.Core\TssT.Core.csproj", "{76FA954E-8885-4FD8-991E-DC32CF242655}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TssT.Core", "TssT.Core\TssT.Core.csproj", "{76FA954E-8885-4FD8-991E-DC32CF242655}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.Businesslogic", "TssT.Businesslogic\TssT.Businesslogic.csproj", "{C6A89F91-D863-471C-8002-E6C55C446E69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TssT.Businesslogic", "TssT.Businesslogic\TssT.Businesslogic.csproj", "{C6A89F91-D863-471C-8002-E6C55C446E69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.DataAccess", "TssT.DataAccess\TssT.DataAccess.csproj", "{4B3130BA-A9F5-4CCE-BAC5-D1BAD042FE13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TssT.DataAccess", "TssT.DataAccess\TssT.DataAccess.csproj", "{4B3130BA-A9F5-4CCE-BAC5-D1BAD042FE13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TssT.Frontend", "TssT.Frontend\TssT.Frontend.csproj", "{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TssT.Frontend", "TssT.Frontend\TssT.Frontend.csproj", "{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6495B88D-2BB7-4DC4-8339-C7F9307903EE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +44,11 @@ Global
 		{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E5BDC1A-572D-4A45-A983-EB3DEF3D6A6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D96523FC-1DD7-487A-942A-883E4D9F2ECC}
 	EndGlobalSection
 EndGlobal

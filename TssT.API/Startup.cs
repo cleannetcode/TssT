@@ -24,7 +24,8 @@ namespace TssT.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            AuthOptions.Key = Configuration["EncryptionKey"];
+            var authOptions = new AuthOptions(Configuration).Configure();
+            services.AddSingleton(authOptions);
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -67,12 +68,12 @@ namespace TssT.API
                     // валидируется ли издатель токена
                     ValidateIssuer = true,
                     // издатель
-                    ValidIssuer = AuthOptions.ISSUER,
+                    ValidIssuer = authOptions.Issuer,
 
                     // валидируется ли потребитель токена
                     ValidateAudience = true,
                     // потребитель токена
-                    ValidAudience = AuthOptions.AUDIENCE,
+                    ValidAudience = authOptions.Audience,
 
                     // валидация времени существования токена
                     ValidateLifetime = true,
@@ -80,7 +81,7 @@ namespace TssT.API
                     // валидируется ли ключ безопасности
                     ValidateIssuerSigningKey = true,
                     // ключ безопасности
-                    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey()
+                    IssuerSigningKey = authOptions.GetSymmetricSecurityKey()
                 };
             });
 

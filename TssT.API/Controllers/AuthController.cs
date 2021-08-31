@@ -22,14 +22,17 @@ namespace TssT.API.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<DataAccess.Entities.User> _userManager;
         private readonly SignInManager<DataAccess.Entities.User> _signInManager;
+        private readonly AuthOptions _authOptions;
 
         public AuthController(IMapper mapper,
             UserManager<DataAccess.Entities.User> userManager,
-            SignInManager<DataAccess.Entities.User> signInManager)
+            SignInManager<DataAccess.Entities.User> signInManager,
+            AuthOptions authOptions)
         {
             _mapper = mapper;
             _userManager = userManager;
             _signInManager = signInManager;
+            _authOptions = authOptions;
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace TssT.API.Controllers
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, rolesString)
                 };
 
-                var symmetricSecurityKey = AuthOptions.GetSymmetricSecurityKey();
+                var symmetricSecurityKey = _authOptions.GetSymmetricSecurityKey();
 
                 var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -69,8 +72,8 @@ namespace TssT.API.Controllers
                     Subject = new ClaimsIdentity(claims),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256),
-                    Audience = AuthOptions.AUDIENCE,
-                    Issuer = AuthOptions.ISSUER
+                    Audience = _authOptions.Audience,
+                    Issuer = _authOptions.Issuer
                 };
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
