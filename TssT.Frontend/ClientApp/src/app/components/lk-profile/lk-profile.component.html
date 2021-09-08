@@ -1,0 +1,22 @@
+<mat-nav-list>
+  <div mat-subheader>Не завершенные: {{ this.tests.uncompleted.length }}</div>
+
+  <a mat-list-item *ngFor="let test of this.tests.uncompleted" routerLink="./{{ test.id }}" >
+    <mat-icon mat-list-icon color="primary">note</mat-icon>
+    <div mat-line>{{test.name}}</div>
+  </a>
+
+  <mat-divider></mat-divider>
+  <div mat-subheader>Завершенные: {{ this.tests.completed.length }}</div>
+  <a mat-list-item *ngFor="let test of this.tests.completed" routerLink="./{{ test.id }}">
+    <mat-icon mat-list-icon color="primary">note</mat-icon>
+    <div mat-line>{{test.name}}</div>
+  </a>
+  <mat-divider></mat-divider>
+
+  <div mat-subheader>Доступные: {{ this.tests.available.length }}</div>
+  <a mat-list-item *ngFor="let test of this.tests.available" routerLink="./{{ test.id }}">
+    <mat-icon mat-list-icon color="primary">note</mat-icon>
+    <div mat-line>{{test.name}}</div>
+  </a>
+</mat-nav-list>

@@ -1,0 +1,22 @@
+:host
+{
+  height: inherit;
+  width: inherit;
+}
+
+.lk {
+
+  &__inner {
+    padding-top: 50px;
+  }
+
+  &__main {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 50px;
+  }
+
+  &__sidebar {
+    min-width: 220px;
+  }
+}
