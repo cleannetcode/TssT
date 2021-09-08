@@ -1,16 +1,14 @@
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication;
+using System.IO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using TssT.DataAccess;
-using TssT.DataAccess.Entities;
 
 namespace TssT.API
 {
@@ -26,10 +24,13 @@ namespace TssT.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var authOptions = new AuthOptions(Configuration).Configure();
+            services.AddSingleton(authOptions);
+
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlite(
+                    Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddAutoMapper(conf =>
@@ -38,16 +39,51 @@ namespace TssT.API
                 conf.AddProfile<DataAccessMappingProfile>();
             });
 
+            //In combination with UseDeveloperExceptionPage, this captures database-related exceptions that can be resolved by using Entity Framework migrations.
+            //When these exceptions occur, an HTML response with details about possible actions to resolve the issue is generated.
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            // services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //     .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<DataAccess.Entities.User, DataAccess.Entities.Role>(
+                options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    // валидируется ли издатель токена
+                    ValidateIssuer = true,
+                    // издатель
+                    ValidIssuer = authOptions.Issuer,
 
-            //services.AddIdentityServer().AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-            //
-            //services.AddAuthentication().AddIdentityServerJwt();
+                    // валидируется ли потребитель токена
+                    ValidateAudience = true,
+                    // потребитель токена
+                    ValidAudience = authOptions.Audience,
+
+                    // валидация времени существования токена
+                    ValidateLifetime = true,
+
+                    // валидируется ли ключ безопасности
+                    ValidateIssuerSigningKey = true,
+                    // ключ безопасности
+                    IssuerSigningKey = authOptions.GetSymmetricSecurityKey()
+                };
+            });
 
             services.AddControllers();
 
@@ -58,12 +94,16 @@ namespace TssT.API
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description =
-                        "JWT Authorization header using the Bearer scheme. \r\n\r\nEnter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+                        "JWT Authorization header using the Bearer scheme."+
+                        "\r\n\r\nEnter 'Bearer' [space] and then your token in the text input below." +
+                        "\r\n\r\nExample: \"Bearer 12345abcdef\"",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
                     Scheme = "Bearer"
                 });
+
+                options.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "TssT.API.xml"));
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {
@@ -98,13 +138,11 @@ namespace TssT.API
             }
 
             app.UseHttpsRedirection();
-            //app.UseStaticFiles();
-
 
             app.UseRouting();
 
             app.UseAuthentication();
-            // app.UseIdentityServer();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

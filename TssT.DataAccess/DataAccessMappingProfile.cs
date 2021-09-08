@@ -6,7 +6,6 @@ namespace TssT.DataAccess
     {
         public DataAccessMappingProfile()
         {
-            CreateMap<Core.Models.User, Entities.User>().ReverseMap();
             CreateMap<Core.Models.Answer, Entities.Answer>().ReverseMap();
             CreateMap<Core.Models.TopicGroup, Entities.TopicGroup>().ReverseMap();
             CreateMap<Core.Models.Topic, Entities.Topic>().ReverseMap();
