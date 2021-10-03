@@ -7,8 +7,8 @@ export class User
     token: any;
     image: any;
 
-    constructor(id?:number, login?:string, token?:string) {
-        this.id = id ?? 0;
+    constructor(login?:string, token?:string) {
+        this.id = 0;
         this.image = '';
         this.login = login;
         this.token = token;
