@@ -24,8 +24,8 @@ export class LoginComponent implements AfterViewInit  {
       this.logout();
 
     //if user is logged redirect to homepage
-    if (authService.getCurrentUser()?.token != '')
-      router.navigate(['/']);
+    if (this.authService.isLoggedIn())
+      this.router.navigate(['/lk']);
   }
   ngAfterViewInit(): void {
 
@@ -74,6 +74,7 @@ export class LoginComponent implements AfterViewInit  {
   }
 
   logout(){
+    this.authService.logout();
     this.router.navigate(['login']);
   }
 

@@ -14,9 +14,12 @@ namespace TssT.API
 {
     public class Startup
     {
+        private const string DefaultPolicyName = "DefaultPolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -26,6 +29,19 @@ namespace TssT.API
         {
             var authOptions = new AuthOptions(Configuration).Configure();
             services.AddSingleton(authOptions);
+            
+            services.AddCors(o => o.AddPolicy(DefaultPolicyName,
+                builder =>
+                {
+                    builder.WithOrigins(
+                            "http://localhost:4200",
+                            "https://localhost:4200",
+                            "http://localhost:5000",
+                            "https://localhost:5001"
+                            )
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                }));
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -136,6 +152,8 @@ namespace TssT.API
                 app.UseSwaggerUI(c =>
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Technology stack self-confidence Test v1"));
             }
+
+            app.UseCors(DefaultPolicyName);
 
             app.UseHttpsRedirection();
 
