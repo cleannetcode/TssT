@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Test} from "../../models/Test";
+import {AuthService} from "../../services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-lk-profile',
@@ -14,8 +16,12 @@ export class LkProfileComponent implements OnInit {
     available: new Array<Test>(),
   }
 
-  constructor() {
+  constructor(private router: Router, private authService: AuthService) {
 
+    let isLogged = authService.isLoggedIn();
+
+    if (!isLogged)
+      router.navigate(['/logout']);
   }
 
   ngOnInit() {

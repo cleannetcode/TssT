@@ -23,7 +23,7 @@ export class LkComponent implements AfterViewInit{
 
   }
   ngAfterViewInit(): void {
-    console.log(this.currentUser);
+
   }
 
 }
