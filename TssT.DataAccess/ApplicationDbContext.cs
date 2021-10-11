@@ -14,6 +14,7 @@ namespace TssT.DataAccess
     {
         //public DbSet<Answer> Answers { get; set; }
         public DbSet<Topic> Topics { get; set; }
+        public DbSet<Test> Tests { get; set; }
         //public DbSet<LevelImportance> LevelImportances { get; set; }
         //public DbSet<LevelKnowledge> LevelKnowledges { get; set; }
 
