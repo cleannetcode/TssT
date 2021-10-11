@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
+using System.Reflection;
 using TssT.DataAccess.Configurations;
 using TssT.DataAccess.Entities;
 
@@ -11,24 +12,21 @@ namespace TssT.DataAccess
 {
     public class ApplicationDbContext : IdentityDbContext<User, Role, string>
     {
-        public DbSet<Answer> answers { get; set; }
+        public DbSet<Answer> Answers { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<LevelImportance> LevelImportances { get; set; }
         public DbSet<LevelKnowledge> LevelKnowledges { get; set; }
-        
+
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new AnswerConfiguration());
-            builder.ApplyConfiguration(new LevelImportanceConfiguration());
-            builder.ApplyConfiguration(new LevelKnowledgeConfiguration());
-            builder.ApplyConfiguration(new TopicConfiguration());
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetCallingAssembly());
             base.OnModelCreating(builder);
         }
     }
