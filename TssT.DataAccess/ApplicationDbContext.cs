@@ -12,10 +12,10 @@ namespace TssT.DataAccess
 {
     public class ApplicationDbContext : IdentityDbContext<User, Role, string>
     {
-        public DbSet<Answer> Answers { get; set; }
+        //public DbSet<Answer> Answers { get; set; }
         public DbSet<Topic> Topics { get; set; }
-        public DbSet<LevelImportance> LevelImportances { get; set; }
-        public DbSet<LevelKnowledge> LevelKnowledges { get; set; }
+        //public DbSet<LevelImportance> LevelImportances { get; set; }
+        //public DbSet<LevelKnowledge> LevelKnowledges { get; set; }
 
         public ApplicationDbContext(
             DbContextOptions options,
