@@ -39,6 +39,23 @@ namespace TssT.API.Controllers.Test
                 Id = createdId
             };
         }
+        
+        [HttpGet("[action]/{id:int}")]
+        public async Task<Core.Models.Test> Get(int id)
+        {
+            return await _testService.GetAsync(id);
+        }
+
+        [HttpGet(nameof(Get))]
+        public async Task<BaseCollectionResponse<Core.Models.Test>> Get()
+        {
+            var items = await _testService.GetAsync();
+
+            return new BaseCollectionResponse<Core.Models.Test>()
+            {
+                Items = items, TotalCount = items.Count
+            };
+        }
 
         [HttpPost(nameof(Delete))]
         public async Task Delete([FromQuery] int id)
