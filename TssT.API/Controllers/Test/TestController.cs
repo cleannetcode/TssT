@@ -29,7 +29,7 @@ namespace TssT.API.Controllers.Test
             _testService = testService ?? throw new ArgumentNullException(nameof(testService));
         }
 
-        [HttpPost(nameof(Create))]
+        [HttpPost]
         public async Task<BaseCreateResponse> Create([FromBody] NewTest request)
         {
             var newTest = _mapper.Map<Core.Models.Test.NewTest>(request);
@@ -42,8 +42,8 @@ namespace TssT.API.Controllers.Test
             };
         }
 
-        [HttpPost(nameof(Delete))]
-        public async Task Delete([FromQuery] int id)
+        [HttpDelete("{id:int}")]
+        public async Task Delete([FromRoute]int id)
         {
             await _testService.DeleteAsync(id);
         }
