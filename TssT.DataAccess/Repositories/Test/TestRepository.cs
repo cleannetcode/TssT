@@ -35,7 +35,7 @@ namespace TssT.DataAccess.Repositories.Test
             return await _dbContext.Tests.FirstOrDefaultAsync(x=>x.Id == id);
         }
 
-        public async Task<IList<Entities.Test>> GetAsync()
+        public async Task<IList<Entities.Test>> GetAllAsync()
         {
             var entities = _dbContext.Tests.ToListAsync();
             return await entities;

@@ -7,7 +7,7 @@ namespace TssT.Businesslogic.Services.Test
     {
         public Task<int> CreateAsync(Core.Models.Test dto);
         Task<Core.Models.Test> GetAsync(int id);
-        Task<IList<Core.Models.Test>> GetAsync();
+        Task<IList<Core.Models.Test>> GetAllAsync();
         public Task DeleteAsync(int id);
     }
 }
