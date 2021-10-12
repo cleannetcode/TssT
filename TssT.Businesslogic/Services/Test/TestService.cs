@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
+using TssT.Core.Errors;
 using TssT.DataAccess.Repositories.Test;
 
 namespace TssT.Businesslogic.Services.Test
@@ -30,6 +31,9 @@ namespace TssT.Businesslogic.Services.Test
 
         public async Task DeleteAsync(int id)
         {
+            if (id <= default(int))
+                throw new ValidationException($"{nameof(id)} должен быть больше {default(int)}");
+            
             await _testRepository.DeleteAsync(id);
         }
     }
