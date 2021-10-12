@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using TssT.Core.Errors;
@@ -33,6 +34,23 @@ namespace TssT.Businesslogic.Services.Test
             entity.CreatedAt = DateTime.UtcNow;
             
             return await _testRepository.InsertAsync(entity);
+        }
+        
+        public async Task<Core.Models.Test.Test> GetAsync(int id)
+        {
+            if (id <= default(int))
+                throw new ValidationException($"{nameof(id)} должен быть больше {default(int)}");
+
+            var entity = await _testRepository.GetAsync(id);
+            
+            return _mapper.Map<Core.Models.Test.Test>(entity);
+        }
+
+        public async Task<IList<Core.Models.Test.Test>> GetAsync()
+        {
+            var entities = await _testRepository.GetAsync();
+            
+            return _mapper.Map<List<Core.Models.Test.Test>>(entities);
         }
 
         public async Task DeleteAsync(int testId)
