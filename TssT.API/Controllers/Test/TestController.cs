@@ -41,13 +41,13 @@ namespace TssT.API.Controllers.Test
             };
         }
         
-        [HttpGet(nameof(Get))]
-        public async Task<Core.Models.Test.Test> Get([FromQuery] int id)
+        [HttpGet("{id:int}")]
+        public async Task<Core.Models.Test.Test> Get([FromRoute] int id)
         {
             return await _testService.GetAsync(id);
         }
 
-        [HttpGet(nameof(GetAll))]
+        [HttpGet]
         public async Task<BaseCollectionResponse<Core.Models.Test.Test>> GetAll()
         {
             var items = await _testService.GetAllAsync();
