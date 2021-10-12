@@ -108,8 +108,11 @@ namespace TssT.API
             services.AddScoped<ITestRepository, TestRepository>();
             services.AddScoped<ITestService, TestService>();
 
-            services.AddControllers();
-
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(new MainExceptionFilter());
+            });
+            
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1",
