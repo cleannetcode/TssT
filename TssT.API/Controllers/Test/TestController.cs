@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using TssT.Businesslogic.Services.Test;
 using TssT.Core.Contracts;
 using TssT.Core.Contracts.Test;
-using TssT.Core.Models.Test;
-using NewTest = TssT.Core.Contracts.Test.NewTest;
 
 namespace TssT.API.Controllers.Test
 {
@@ -43,17 +41,17 @@ namespace TssT.API.Controllers.Test
         }
         
         [HttpGet("[action]/{id:int}")]
-        public async Task<Core.Models.Test> Get(int id)
+        public async Task<Core.Models.Test.Test> Get(int id)
         {
             return await _testService.GetAsync(id);
         }
 
         [HttpGet(nameof(Get))]
-        public async Task<BaseCollectionResponse<Core.Models.Test>> Get()
+        public async Task<BaseCollectionResponse<Core.Models.Test.Test>> Get()
         {
             var items = await _testService.GetAsync();
 
-            return new BaseCollectionResponse<Core.Models.Test>()
+            return new BaseCollectionResponse<Core.Models.Test.Test>()
             {
                 Items = items, TotalCount = items.Count
             };
