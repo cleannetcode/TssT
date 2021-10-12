@@ -8,7 +8,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using TssT.Businesslogic;
+using TssT.Businesslogic.Services.Test;
 using TssT.DataAccess;
+using TssT.DataAccess.Repositories.Test;
 
 namespace TssT.API
 {
@@ -101,6 +104,9 @@ namespace TssT.API
                     IssuerSigningKey = authOptions.GetSymmetricSecurityKey()
                 };
             });
+
+            services.AddScoped<ITestRepository, TestRepository>();
+            services.AddScoped<ITestService, TestService>();
 
             services.AddControllers();
 
