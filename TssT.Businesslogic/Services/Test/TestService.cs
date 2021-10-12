@@ -30,7 +30,7 @@ namespace TssT.Businesslogic.Services.Test
             
             var entity = _mapper.Map<DataAccess.Entities.Test>(test);
             
-            entity.CreatedAt = DateTime.Now;
+            entity.CreatedAt = DateTime.UtcNow;
             
             return await _testRepository.InsertAsync(entity);
         }
@@ -41,7 +41,7 @@ namespace TssT.Businesslogic.Services.Test
                 throw new ValidationException($"{nameof(testId)} должен быть больше {default(int)}");
 
             var entity = await _testRepository.GetAsync(testId);
-            entity.DeletedAt = DateTime.Now;
+            entity.DeletedAt = DateTime.UtcNow;
             await _testRepository.UpdateAsync(entity);
         }
     }
