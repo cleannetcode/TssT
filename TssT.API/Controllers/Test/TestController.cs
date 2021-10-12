@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -53,7 +54,7 @@ namespace TssT.API.Controllers.Test
 
             return new BaseCollectionResponse<Core.Models.Test>()
             {
-                Items = items, TotalCount = items.Count
+                Items = new ReadOnlyCollection<Core.Models.Test>(items), TotalCount = items.Count
             };
         }
 
