@@ -33,8 +33,10 @@ namespace TssT.Businesslogic.Services.Test
         {
             if (id <= default(int))
                 throw new ValidationException($"{nameof(id)} должен быть больше {default(int)}");
-            
-            await _testRepository.DeleteAsync(id);
+
+            var entity = await _testRepository.GetAsync(id);
+            entity.DeletedAt = DateTime.Now;
+            await _testRepository.UpdateAsync(entity);
         }
     }
 }
