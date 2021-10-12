@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,6 +33,12 @@ namespace TssT.DataAccess.Repositories.Test
                 throw new ArgumentOutOfRangeException(nameof(id), $"Id must be grater then {default(int)}");
 
             return await _dbContext.Tests.FirstOrDefaultAsync(x=>x.Id == id);
+        }
+
+        public async Task<IList<Entities.Test>> GetAsync()
+        {
+            var entities = _dbContext.Tests.ToListAsync();
+            return await entities;
         }
 
         public async Task UpdateAsync(Entities.Test entity)

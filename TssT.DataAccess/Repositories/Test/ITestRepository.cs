@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace TssT.DataAccess.Repositories.Test
 {
@@ -6,6 +7,7 @@ namespace TssT.DataAccess.Repositories.Test
     {
         Task<int> InsertAsync(Entities.Test entity);
         Task<Entities.Test> GetAsync(int id);
+        Task<IList<Entities.Test>> GetAsync();
         Task UpdateAsync(Entities.Test entity);
         Task DeleteAsync(int id);
     }
