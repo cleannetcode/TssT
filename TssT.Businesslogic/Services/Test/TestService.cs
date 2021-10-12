@@ -46,9 +46,9 @@ namespace TssT.Businesslogic.Services.Test
             return _mapper.Map<Core.Models.Test.Test>(entity);
         }
 
-        public async Task<IList<Core.Models.Test.Test>> GetAsync()
+        public async Task<IList<Core.Models.Test.Test>> GetAllAsync()
         {
-            var entities = await _testRepository.GetAsync();
+            var entities = await _testRepository.GetAllAsync();
             
             return _mapper.Map<List<Core.Models.Test.Test>>(entities);
         }
