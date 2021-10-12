@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using TssT.Businesslogic.Services.Test;
 using TssT.Core.Contracts;
 using TssT.Core.Contracts.Test;
+using TssT.Core.Models.Test;
+using NewTest = TssT.Core.Contracts.Test.NewTest;
 
 namespace TssT.API.Controllers.Test
 {
@@ -28,11 +30,11 @@ namespace TssT.API.Controllers.Test
         }
 
         [HttpPost(nameof(Create))]
-        public async Task<BaseCreateResponse> Create([FromBody] TestCreateRequest request)
+        public async Task<BaseCreateResponse> Create([FromBody] NewTest request)
         {
-            var dto = _mapper.Map<Core.Models.Test>(request);
+            var newTest = _mapper.Map<Core.Models.Test.NewTest>(request);
 
-            var createdId = await _testService.CreateAsync(dto);
+            var createdId = await _testService.CreateAsync(newTest);
 
             return new BaseCreateResponse()
             {

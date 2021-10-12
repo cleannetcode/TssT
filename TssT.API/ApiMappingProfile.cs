@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using TssT.API.Contracts;
-using TssT.Core.Contracts.Test;
 using TssT.Core.Models;
+using TssT.Core.Models.Test;
 using Answer = TssT.API.Contracts.Answer;
 using LevelImportance = TssT.API.Contracts.LevelImportance;
+using NewTest = TssT.Core.Contracts.Test.NewTest;
 
 namespace TssT.API
 {
@@ -19,7 +20,7 @@ namespace TssT.API
             CreateMap<DataAccess.Entities.User, Contracts.User>().ReverseMap();
             CreateMap<DataAccess.Entities.Role, Contracts.Role>().ReverseMap();
 
-            CreateMap<TestCreateRequest, Test>();
+            CreateMap<NewTest, Test>();
         }
     }
 }

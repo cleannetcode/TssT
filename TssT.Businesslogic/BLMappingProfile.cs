@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using TssT.Core.Models;
 
 namespace TssT.Businesslogic
 {
@@ -7,7 +6,8 @@ namespace TssT.Businesslogic
     {
         public BLMappingProfile()
         {
-            CreateMap<Test, DataAccess.Entities.Test>().ReverseMap();
+            CreateMap<Core.Models.Test.NewTest, DataAccess.Entities.Test>();
+            CreateMap<Core.Models.Test.Test, DataAccess.Entities.Test>().ReverseMap();
         }
     }
 }

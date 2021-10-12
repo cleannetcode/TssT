@@ -20,21 +20,27 @@ namespace TssT.Businesslogic.Services.Test
             _testRepository = testRepository ?? throw new ArgumentNullException(nameof(testRepository));
         }
         
-        public async Task<int> CreateAsync(Core.Models.Test dto)
+        public async Task<int> CreateAsync(Core.Models.Test.NewTest test)
         {
-            var entity = _mapper.Map<DataAccess.Entities.Test>(dto);
+            if (test == null)
+                throw new ValidationException($"Параметр {nameof(test)} является обязательным");
+            
+            if (string.IsNullOrWhiteSpace(test.Name) || test.Name.Length is <= 3 or > 200)
+                throw new ValidationException($"Параметр {nameof(test.Name)} является обязательным и должен содержать не менее 3 и не более 200 символов");
+            
+            var entity = _mapper.Map<DataAccess.Entities.Test>(test);
             
             entity.CreatedAt = DateTime.Now;
             
             return await _testRepository.InsertAsync(entity);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int testId)
         {
-            if (id <= default(int))
-                throw new ValidationException($"{nameof(id)} должен быть больше {default(int)}");
+            if (testId <= default(int))
+                throw new ValidationException($"{nameof(testId)} должен быть больше {default(int)}");
 
-            var entity = await _testRepository.GetAsync(id);
+            var entity = await _testRepository.GetAsync(testId);
             entity.DeletedAt = DateTime.Now;
             await _testRepository.UpdateAsync(entity);
         }
