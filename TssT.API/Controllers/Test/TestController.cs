@@ -54,7 +54,7 @@ namespace TssT.API.Controllers.Test
 
             return new BaseCollectionResponse<Core.Models.Test.Test>()
             {
-                Items = new ReadOnlyCollection<Core.Models.Test>(items), TotalCount = items.Count
+                Items = new ReadOnlyCollection<Core.Models.Test.Test>(items), TotalCount = items.Count
             };
         }
 
