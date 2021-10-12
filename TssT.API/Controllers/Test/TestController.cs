@@ -39,5 +39,11 @@ namespace TssT.API.Controllers.Test
                 Id = createdId
             };
         }
+
+        [HttpPost(nameof(Delete))]
+        public async Task Delete([FromQuery] int id)
+        {
+            await _testService.DeleteAsync(id);
+        }
     }
 }
