@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using TssT.DataAccess.Entities;
 
 namespace TssT.DataAccess.Repositories.Test
 {
@@ -25,6 +24,23 @@ namespace TssT.DataAccess.Repositories.Test
             await _dbContext.SaveChangesAsync();
 
             return entity.Id;
+        }
+
+        public async Task<Entities.Test> GetAsync(int id)
+        {
+            if (id <= default(int))
+                throw new ArgumentOutOfRangeException(nameof(id), $"Id must be grater then {default(int)}");
+
+            return await _dbContext.Tests.FirstOrDefaultAsync(x=>x.Id == id);
+        }
+
+        public async Task UpdateAsync(Entities.Test entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            _dbContext.Tests.Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)

@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
-using TssT.DataAccess.Entities;
 
 namespace TssT.DataAccess.Repositories.Test
 {
     public interface ITestRepository
     {
-        public Task<int> InsertAsync(Entities.Test entity);
-        public Task DeleteAsync(int id);
+        Task<int> InsertAsync(Entities.Test entity);
+        Task<Entities.Test> GetAsync(int id);
+        Task UpdateAsync(Entities.Test entity);
+        Task DeleteAsync(int id);
     }
 }
