@@ -14,7 +14,9 @@ namespace TssT.DataAccess.Configurations
             builder
                 .HasMany(x => x.Topics)
                 .WithOne(x => x.Test)
-                .HasForeignKey(x => x.TestId);
+                .HasForeignKey(x => x.TestId)
+                .OnDelete(DeleteBehavior.Restrict)
+                ;
         }
     }
 }
