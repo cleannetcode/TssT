@@ -53,6 +53,7 @@ namespace TssT.API
             {
                 conf.AddProfile<ApiMappingProfile>();
                 conf.AddProfile<DataAccessMappingProfile>();
+                conf.AddProfile<BLMappingProfile>();
             });
 
             //In combination with UseDeveloperExceptionPage, this captures database-related exceptions that can be resolved by using Entity Framework migrations.
