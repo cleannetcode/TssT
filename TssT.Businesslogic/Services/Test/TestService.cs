@@ -22,6 +22,9 @@ namespace TssT.Businesslogic.Services.Test
         public async Task<int> CreateAsync(Core.Models.Test dto)
         {
             var entity = _mapper.Map<DataAccess.Entities.Test>(dto);
+            
+            entity.CreatedAt = DateTime.Now;
+            
             return await _testRepository.InsertAsync(entity);
         }
 
