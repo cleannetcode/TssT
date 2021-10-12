@@ -29,7 +29,7 @@ namespace TssT.DataAccess.Repositories.Test
         public async Task<Entities.Test> GetAsync(int id)
         {
             if (id <= default(int))
-                throw new ArgumentOutOfRangeException(nameof(id), $"Id must be grater then {default(int)}");
+                throw new ArgumentOutOfRangeException(nameof(id), $"Id теста должен быть больше чем {default(int)}");
 
             return await _dbContext.Tests.FirstOrDefaultAsync(x=>x.Id == id);
         }
@@ -46,7 +46,7 @@ namespace TssT.DataAccess.Repositories.Test
         public async Task DeleteAsync(int id)
         {
             if (id <= default(int))
-                throw new ArgumentOutOfRangeException(nameof(id), $"Id must be grater then {default(int)}");
+                throw new ArgumentOutOfRangeException(nameof(id), $"Id теста должен быть больше чем {default(int)}");
 
             var entity = await _dbContext.Tests.FirstOrDefaultAsync(x => x.Id == id);
             
