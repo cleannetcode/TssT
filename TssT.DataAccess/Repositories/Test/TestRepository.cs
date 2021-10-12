@@ -22,6 +22,7 @@ namespace TssT.DataAccess.Repositories.Test
                 throw new ArgumentNullException(nameof(entity));
 
             await _dbContext.Tests.AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
 
             return entity.Id;
         }
