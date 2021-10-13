@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace TssT.Core.Models.Test
+namespace TssT.API.Contracts.Test
 {
     public class NewTest
     {
@@ -9,8 +8,7 @@ namespace TssT.Core.Models.Test
         [StringLength(200, MinimumLength = 3)]
         public string Name { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-
+        [MaxLength(300)]
         public string? Description { get; set; }
     }
 }

@@ -4,7 +4,6 @@ using TssT.Core.Models;
 using TssT.Core.Models.Test;
 using Answer = TssT.API.Contracts.Answer;
 using LevelImportance = TssT.API.Contracts.LevelImportance;
-using NewTest = TssT.Core.Contracts.Test.NewTest;
 
 namespace TssT.API
 {
@@ -13,14 +12,14 @@ namespace TssT.API
         public ApiMappingProfile()
         {
             CreateMap<Answer, Core.Models.Answer>().ReverseMap();
-            CreateMap<NewTopicGroup, Core.Models.TopicGroup>().ReverseMap();
-            CreateMap<NewTopic, Core.Models.Topic>().ReverseMap();
+            CreateMap<NewTopicGroup, TopicGroup>().ReverseMap();
+            CreateMap<NewTopic, Topic>().ReverseMap();
             CreateMap<LevelImportance, Core.Models.LevelImportance>().ReverseMap();
-            CreateMap<NewLevelKnowledge, Core.Models.LevelKnowledge>().ReverseMap();
-            CreateMap<DataAccess.Entities.User, Contracts.User>().ReverseMap();
-            CreateMap<DataAccess.Entities.Role, Contracts.Role>().ReverseMap();
+            CreateMap<NewLevelKnowledge, LevelKnowledge>().ReverseMap();
+            CreateMap<DataAccess.Entities.User, User>().ReverseMap();
+            CreateMap<DataAccess.Entities.Role, Role>().ReverseMap();
 
-            CreateMap<NewTest, Test>();
+            CreateMap<Contracts.Test.NewTest, NewTest>();
         }
     }
 }

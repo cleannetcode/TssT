@@ -1,4 +1,4 @@
-﻿namespace TssT.Core.Contracts
+﻿namespace TssT.API.Contracts
 {
     public class BaseCreateResponse
     {

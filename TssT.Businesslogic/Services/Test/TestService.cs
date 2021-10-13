@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using TssT.Core.Exceptions;
-using TssT.DataAccess.Repositories.Test;
+using TssT.Core.Repository.Test;
 
 namespace TssT.Businesslogic.Services.Test
 {
@@ -21,19 +21,17 @@ namespace TssT.Businesslogic.Services.Test
             _testRepository = testRepository ?? throw new ArgumentNullException(nameof(testRepository));
         }
 
-        public async Task<int> CreateAsync(Core.Models.Test.NewTest test)
+        public async Task<int> CreateAsync(Core.Models.Test.NewTest newTest)
         {
-            if (test == null)
-                throw new ValidationException(nameof(test), $"Параметр {nameof(test)} является обязательным");
+            if (newTest == null)
+                throw new ValidationException(nameof(newTest), $"Параметр {nameof(newTest)} является обязательным");
 
-            if (string.IsNullOrWhiteSpace(test.Name) || test.Name.Length is <= 3 or > 200)
-                throw new ValidationException(nameof(test.Name), $"Параметр {nameof(test.Name)} является обязательным и должен содержать не менее 3 и не более 200 символов");
+            if (string.IsNullOrWhiteSpace(newTest.Name) || newTest.Name.Length is <= 3 or > 200)
+                throw new ValidationException(nameof(newTest.Name), $"Параметр {nameof(newTest.Name)} является обязательным и должен содержать не менее 3 и не более 200 символов");
 
-            var entity = _mapper.Map<DataAccess.Entities.Test>(test);
+            newTest.CreatedAt = DateTime.UtcNow;
 
-            entity.CreatedAt = DateTime.UtcNow;
-
-            return await _testRepository.InsertAsync(entity);
+            return await _testRepository.InsertAsync(newTest);
         }
 
         public async Task<Core.Models.Test.Test> GetAsync(int id)
@@ -59,13 +57,14 @@ namespace TssT.Businesslogic.Services.Test
             if (testId <= default(int))
                 throw new ValidationException(nameof(testId), $"{nameof(testId)} должен быть больше {default(int)}");
 
-            var entity = await _testRepository.GetAsync(testId);
+            var test = await _testRepository.GetAsync(testId);
 
-            if (entity == null)
+            if (test == null)
                 throw new EntityNotFoundException(testId);
 
-            entity.DeletedAt = DateTime.UtcNow;
-            await _testRepository.UpdateAsync(entity);
+            test.DeletedAt = DateTime.UtcNow;
+
+            await _testRepository.UpdateAsync(test);
         }
     }
 }

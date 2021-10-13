@@ -10,6 +10,9 @@ namespace TssT.DataAccess
             CreateMap<Core.Models.Topic, Entities.Topic>().ReverseMap();
             CreateMap<Core.Models.LevelImportance, Entities.LevelImportance>().ReverseMap();
             CreateMap<Core.Models.LevelKnowledge, Entities.LevelKnowledge>().ReverseMap();
+
+            CreateMap<Core.Models.Test.NewTest, Entities.Test>();
+            CreateMap<Core.Models.Test.Test, Entities.Test>().ReverseMap();
         }
     }
 }

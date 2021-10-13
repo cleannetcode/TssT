@@ -6,8 +6,7 @@ namespace TssT.Businesslogic
     {
         public BLMappingProfile()
         {
-            CreateMap<Core.Models.Test.NewTest, DataAccess.Entities.Test>();
-            CreateMap<Core.Models.Test.Test, DataAccess.Entities.Test>().ReverseMap();
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TssT.Core.Contracts
+namespace TssT.API.Contracts
 {
     public class BaseCollectionResponse<T>
     {

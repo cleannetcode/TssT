@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TssT.API.Contracts;
+using TssT.API.Contracts.Test;
 using TssT.Businesslogic.Services.Test;
-using TssT.Core.Contracts;
-using TssT.Core.Contracts.Test;
 
 namespace TssT.API.Controllers.Test
 {
@@ -18,7 +18,7 @@ namespace TssT.API.Controllers.Test
     {
         private readonly IMapper _mapper;
         private readonly ITestService _testService;
-        
+
         public TestController(
             IMapper mapper,
             ITestService testService
@@ -40,7 +40,7 @@ namespace TssT.API.Controllers.Test
                 Id = createdId
             };
         }
-        
+
         [HttpGet("{id:int}")]
         public async Task<Core.Models.Test.Test> Get([FromRoute] int id)
         {

@@ -18,6 +18,7 @@ using TssT.DataAccess.Repositories.Test;
 using Hellang.Middleware.ProblemDetails.Mvc;
 using Microsoft.AspNetCore.Http;
 using TssT.Core.Exceptions;
+using TssT.Core.Repository.Test;
 
 namespace TssT.API
 {
