@@ -1,12 +1,13 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TssT.API.Contracts;
+using Role = TssT.DataAccess.Entities.Role;
 
 namespace TssT.API.Controllers
 {
@@ -18,9 +19,9 @@ namespace TssT.API.Controllers
     public class RolesController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly RoleManager<DataAccess.Entities.Role> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public RolesController(IMapper mapper, RoleManager<DataAccess.Entities.Role> roleManager)
+        public RolesController(IMapper mapper, RoleManager<Role> roleManager)
         {
             _mapper = mapper;
             _roleManager = roleManager;
@@ -52,7 +53,7 @@ namespace TssT.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var newRoleEntity = new DataAccess.Entities.Role(newRole.Name) { Id = Guid.NewGuid().ToString() };
+            var newRoleEntity = new Role(newRole.Name) { Id = Guid.NewGuid().ToString() };
 
             var result = await _roleManager.CreateAsync(newRoleEntity);
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using TssT.Core.Exceptions;
+using TssT.Core.Models.Test;
 using TssT.Core.Repository.Test;
 
 namespace TssT.Businesslogic.Services.Test
@@ -21,7 +22,7 @@ namespace TssT.Businesslogic.Services.Test
             _testRepository = testRepository ?? throw new ArgumentNullException(nameof(testRepository));
         }
 
-        public async Task<int> CreateAsync(Core.Models.Test.NewTest newTest)
+        public async Task<int> CreateAsync(NewTest newTest)
         {
             if (newTest == null)
                 throw new ValidationException(nameof(newTest), $"Параметр {nameof(newTest)} является обязательным");

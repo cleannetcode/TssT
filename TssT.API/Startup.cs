@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using Hellang.Middleware.ProblemDetails;
+using Hellang.Middleware.ProblemDetails.Mvc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using TssT.Businesslogic;
 using TssT.Businesslogic.Services.Test;
-using TssT.DataAccess;
-using TssT.DataAccess.Repositories.Test;
-using Hellang.Middleware.ProblemDetails.Mvc;
-using Microsoft.AspNetCore.Http;
-using TssT.Core.Exceptions;
 using TssT.Core.Repository.Test;
+using TssT.DataAccess;
+using TssT.DataAccess.Entities;
+using TssT.DataAccess.Repositories.Test;
 
 namespace TssT.API
 {
@@ -67,7 +68,7 @@ namespace TssT.API
             //When these exceptions occur, an HTML response with details about possible actions to resolve the issue is generated.
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddIdentity<DataAccess.Entities.User, DataAccess.Entities.Role>(
+            services.AddIdentity<User, Role>(
                 options =>
                 {
                     options.Password.RequireDigit = false;
@@ -87,7 +88,7 @@ namespace TssT.API
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidIssuer = authOptions.Issuer,
@@ -129,7 +130,7 @@ namespace TssT.API
                     Scheme = "Bearer"
                 });
 
-                options.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "TssT.API.xml"));
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "TssT.API.xml"));
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {

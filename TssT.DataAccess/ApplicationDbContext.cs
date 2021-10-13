@@ -1,11 +1,8 @@
-﻿using IdentityServer4.EntityFramework.Options;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+﻿using System.Reflection;
+using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
-using System.Reflection;
-using TssT.DataAccess.Configurations;
 using TssT.DataAccess.Entities;
 
 namespace TssT.DataAccess

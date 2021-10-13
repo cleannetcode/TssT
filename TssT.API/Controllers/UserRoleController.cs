@@ -1,11 +1,13 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using TssT.API.Contracts;
+using Role = TssT.DataAccess.Entities.Role;
+using User = TssT.DataAccess.Entities.User;
 
 namespace TssT.API.Controllers
 {
@@ -17,13 +19,13 @@ namespace TssT.API.Controllers
     public class UserRoleController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly UserManager<DataAccess.Entities.User> _userManager;
-        private readonly RoleManager<DataAccess.Entities.Role> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
         public UserRoleController(
             IMapper mapper, 
-            UserManager<DataAccess.Entities.User> userManager, 
-            RoleManager<DataAccess.Entities.Role> roleManager)
+            UserManager<User> userManager, 
+            RoleManager<Role> roleManager)
         {
             _mapper = mapper;
             _userManager = userManager;

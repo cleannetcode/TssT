@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using TssT.Core.Interfaces;
-using TssT.DataAccess.Entities;
+using TssT.Core.Models;
 
 namespace TssT.DataAccess.Repositories
 {
@@ -22,12 +22,12 @@ namespace TssT.DataAccess.Repositories
         /// </summary>
         /// <param name="topicGroup">Уровень знаний топика</param>
         /// <returns>В случае успешного выполнения вернет идентификатор добавленной записи</returns>
-        public async Task<int> AddAsync(Core.Models.LevelKnowledge levelKnowledge)
+        public async Task<int> AddAsync(LevelKnowledge levelKnowledge)
         {
             if (levelKnowledge == null)
                 throw new ArgumentNullException(nameof(levelKnowledge));
 
-            var entity = _mapper.Map<LevelKnowledge>(levelKnowledge);
+            var entity = _mapper.Map<Entities.LevelKnowledge>(levelKnowledge);
             var entry = await _context.AddAsync(entity);
 
             await _context.SaveChangesAsync();

@@ -1,14 +1,15 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using TssT.API.Contracts;
+using User = TssT.DataAccess.Entities.User;
 
 namespace TssT.API.Controllers
 {
@@ -20,13 +21,13 @@ namespace TssT.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly UserManager<DataAccess.Entities.User> _userManager;
-        private readonly SignInManager<DataAccess.Entities.User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly AuthOptions _authOptions;
 
         public AuthController(IMapper mapper,
-            UserManager<DataAccess.Entities.User> userManager,
-            SignInManager<DataAccess.Entities.User> signInManager,
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
             AuthOptions authOptions)
         {
             _mapper = mapper;
@@ -93,7 +94,7 @@ namespace TssT.API.Controllers
         /// <param name="userName">Имя пользователя.</param>
         /// <param name="userPassword">Пароль пользователя.</param>
         /// <returns>Возвращает пользователя.</returns>
-        private async Task<DataAccess.Entities.User> GetByNameAndPassword(string userName, string userPassword)
+        private async Task<User> GetByNameAndPassword(string userName, string userPassword)
         {
             var user = await _userManager.FindByNameAsync(userName);
 
