@@ -1,14 +1,19 @@
-﻿using System;
+﻿using Hellang.Middleware.ProblemDetails;
+using Microsoft.AspNetCore.Mvc;
 
-namespace TssT.Core.Errors
+namespace TssT.Core.Exceptions
 {
-    public class ValidationException : Exception
+    public class ValidationException : ProblemDetailsException
     {
-        public string Description { get; }
-
-        public ValidationException(string? message) : base(message)
+        public ValidationException(string parameter, string? message) : base(new ProblemDetails()
         {
-            Description = "Ошибка валидации";
+            Type = "https://example.com/validation",
+            Instance = null,
+            Title = "Некорректные данные",
+            Status = 400
+        })
+        {
+            Details.Detail = message;
         }
     }
 }

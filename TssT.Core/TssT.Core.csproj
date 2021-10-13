@@ -5,8 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Hellang.Middleware.ProblemDetails" Version="6.2.0" />
       <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.8" />
     </ItemGroup>
+
 
 </Project>

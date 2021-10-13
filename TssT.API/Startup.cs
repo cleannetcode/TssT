@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +15,9 @@ using TssT.Businesslogic;
 using TssT.Businesslogic.Services.Test;
 using TssT.DataAccess;
 using TssT.DataAccess.Repositories.Test;
+using Hellang.Middleware.ProblemDetails.Mvc;
+using Microsoft.AspNetCore.Http;
+using TssT.Core.Exceptions;
 
 namespace TssT.API
 {
@@ -21,18 +27,15 @@ namespace TssT.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            
-            
         }
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var authOptions = new AuthOptions(Configuration).Configure();
             services.AddSingleton(authOptions);
-            
+
             services.AddCors(o => o.AddPolicy(DefaultPolicyName,
                 builder =>
                 {
@@ -85,22 +88,12 @@ namespace TssT.API
                 options.RequireHttpsMetadata = false;
                 options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
                 {
-                    // валидируется ли издатель токена
                     ValidateIssuer = true,
-                    // издатель
                     ValidIssuer = authOptions.Issuer,
-
-                    // валидируется ли потребитель токена
                     ValidateAudience = true,
-                    // потребитель токена
                     ValidAudience = authOptions.Audience,
-
-                    // валидация времени существования токена
                     ValidateLifetime = true,
-
-                    // валидируется ли ключ безопасности
                     ValidateIssuerSigningKey = true,
-                    // ключ безопасности
                     IssuerSigningKey = authOptions.GetSymmetricSecurityKey()
                 };
             });
@@ -112,7 +105,13 @@ namespace TssT.API
             {
                 options.Filters.Add(new MainExceptionFilter());
             });
-            
+
+            services
+                .AddProblemDetails(ConfigureProblemDetails)
+                .AddControllers()
+                .AddProblemDetailsConventions()
+                .AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
+
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1",
@@ -154,6 +153,8 @@ namespace TssT.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseProblemDetails();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -179,6 +180,13 @@ namespace TssT.API
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
+        }
+
+        private void ConfigureProblemDetails(ProblemDetailsOptions options)
+        {
+            options.MapToStatusCode<NotImplementedException>(StatusCodes.Status501NotImplemented);
+            options.MapToStatusCode<HttpRequestException>(StatusCodes.Status503ServiceUnavailable);
+            options.MapToStatusCode<Exception>(StatusCodes.Status500InternalServerError);
         }
     }
 }

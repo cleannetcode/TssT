@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Hellang.Middleware.ProblemDetails;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using TssT.Core.Errors;
 
 namespace TssT.API
 {
@@ -12,11 +12,12 @@ namespace TssT.API
         {
             switch (context.Exception)
             {
-                case ValidationException exception:
-                    context.Result = new ObjectResult(new
+                case ProblemDetailsException exception:
+                    context.Result = new ObjectResult(exception.Details)
                     {
-                        exception.Message
-                    }) {StatusCode = 400};
+                        ContentTypes = { "application/problem+json" },
+                        StatusCode = exception.Details.Status
+                    };
                     context.ExceptionHandled = true;
                     break;
             }
