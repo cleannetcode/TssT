@@ -1,6 +1,6 @@
-﻿using Hellang.Middleware.ProblemDetails;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using TssT.Core.Exceptions;
 
 namespace TssT.API
 {

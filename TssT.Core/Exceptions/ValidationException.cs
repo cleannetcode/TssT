@@ -1,5 +1,4 @@
-﻿using Hellang.Middleware.ProblemDetails;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace TssT.Core.Exceptions
 {

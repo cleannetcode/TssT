@@ -1,9 +1,8 @@
-﻿using Hellang.Middleware.ProblemDetails;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace TssT.Core.Exceptions
 {
-    public class EntityNotFoundException:ProblemDetailsException
+    public class EntityNotFoundException: ProblemDetailsException
     {
         public EntityNotFoundException(int? entityId = null):base(new ProblemDetails()
         {

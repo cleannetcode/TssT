@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using Hellang.Middleware.ProblemDetails;
-using Hellang.Middleware.ProblemDetails.Mvc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -109,9 +107,7 @@ namespace TssT.API
             });
 
             services
-                .AddProblemDetails(ConfigureProblemDetails)
                 .AddControllers()
-                .AddProblemDetailsConventions()
                 .AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
 
             services.AddSwaggerGen(options =>
@@ -155,8 +151,6 @@ namespace TssT.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseProblemDetails();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -182,13 +176,6 @@ namespace TssT.API
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
             });
-        }
-
-        private void ConfigureProblemDetails(ProblemDetailsOptions options)
-        {
-            options.MapToStatusCode<NotImplementedException>(StatusCodes.Status501NotImplemented);
-            options.MapToStatusCode<HttpRequestException>(StatusCodes.Status503ServiceUnavailable);
-            options.MapToStatusCode<Exception>(StatusCodes.Status500InternalServerError);
         }
     }
 }
