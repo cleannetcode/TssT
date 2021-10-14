@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TssT.Core.Models.Test
+namespace TssT.Core.Models
 {
     public class Test
     {

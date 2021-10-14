@@ -21,7 +21,7 @@ namespace TssT.API
             CreateMap<User, Contracts.User>().ReverseMap();
             CreateMap<Role, Contracts.Role>().ReverseMap();
 
-            CreateMap<NewTest, Core.Models.Test.NewTest>();
+            CreateMap<NewTest, Test>();
         }
     }
 }

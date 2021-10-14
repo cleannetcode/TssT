@@ -31,7 +31,7 @@ namespace TssT.API.Controllers.Test
         [HttpPost]
         public async Task<BaseCreateResponse> Create([FromBody] NewTest request)
         {
-            var newTest = _mapper.Map<Core.Models.Test.NewTest>(request);
+            var newTest = _mapper.Map<Core.Models.Test>(request);
 
             var createdId = await _testService.CreateAsync(newTest);
 
@@ -42,19 +42,19 @@ namespace TssT.API.Controllers.Test
         }
 
         [HttpGet("{id:int}")]
-        public async Task<Core.Models.Test.Test> Get([FromRoute] int id)
+        public async Task<Core.Models.Test> Get([FromRoute] int id)
         {
             return await _testService.GetAsync(id);
         }
 
         [HttpGet]
-        public async Task<BaseCollectionResponse<Core.Models.Test.Test>> GetAll()
+        public async Task<BaseCollectionResponse<Core.Models.Test>> GetAll()
         {
             var items = await _testService.GetAllAsync();
 
-            return new BaseCollectionResponse<Core.Models.Test.Test>()
+            return new BaseCollectionResponse<Core.Models.Test>()
             {
-                Items = new ReadOnlyCollection<Core.Models.Test.Test>(items), TotalCount = items.Count
+                Items = new ReadOnlyCollection<Core.Models.Test>(items), TotalCount = items.Count
             };
         }
 

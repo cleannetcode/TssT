@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using TssT.Core.Models.Test;
 using TssT.Core.Repository.Test;
 
 namespace TssT.DataAccess.Repositories.Test
@@ -22,7 +21,7 @@ namespace TssT.DataAccess.Repositories.Test
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<int> InsertAsync(NewTest newTest)
+        public async Task<int> InsertAsync(Core.Models.Test newTest)
         {
             if (newTest == null)
                 throw new ArgumentNullException(nameof(newTest));
@@ -35,23 +34,23 @@ namespace TssT.DataAccess.Repositories.Test
             return entity.Id;
         }
 
-        public async Task<Core.Models.Test.Test> GetAsync(int testId)
+        public async Task<Core.Models.Test> GetAsync(int testId)
         {
             if (testId <= default(int))
                 throw new ArgumentOutOfRangeException(nameof(testId), $"Id теста должен быть больше чем {default(int)}");
 
             var entity = await _dbContext.Tests.FirstOrDefaultAsync(x=>x.Id == testId);
 
-            return _mapper.Map<Core.Models.Test.Test>(entity);
+            return _mapper.Map<Core.Models.Test>(entity);
         }
 
-        public async Task<IReadOnlyCollection<Core.Models.Test.Test>> GetAllAsync()
+        public async Task<IReadOnlyCollection<Core.Models.Test>> GetAllAsync()
         {
             var entities = await _dbContext.Tests.ToListAsync();
-            return _mapper.Map<List<Core.Models.Test.Test>>(entities);
+            return _mapper.Map<List<Core.Models.Test>>(entities);
         }
 
-        public async Task UpdateAsync(Core.Models.Test.Test test)
+        public async Task UpdateAsync(Core.Models.Test test)
         {
             if (test == null)
                 throw new ArgumentNullException(nameof(test));

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using TssT.Core.Models;
-using TssT.Core.Models.Test;
 using Test = TssT.DataAccess.Entities.Test;
 
 namespace TssT.DataAccess
@@ -14,8 +13,7 @@ namespace TssT.DataAccess
             CreateMap<LevelImportance, Entities.LevelImportance>().ReverseMap();
             CreateMap<LevelKnowledge, Entities.LevelKnowledge>().ReverseMap();
 
-            CreateMap<NewTest, Test>();
-            CreateMap<Core.Models.Test.Test, Test>().ReverseMap();
+            CreateMap<Core.Models.Test, Test>().ReverseMap();
         }
     }
 }
