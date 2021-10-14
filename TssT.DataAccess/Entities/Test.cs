@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TssT.Core.Interfaces;
 
 namespace TssT.DataAccess.Entities
 {
-    public class Test: BaseEntity
+    public class Test: BaseEntity, ITimeStamped
     {
         [Required(AllowEmptyStrings = false)]
         [StringLength(200, MinimumLength = 3)]

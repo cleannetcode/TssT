@@ -30,13 +30,10 @@ namespace TssT.Businesslogic.Services.Test
             if (string.IsNullOrWhiteSpace(newTest.Name) || newTest.Name.Length is <= 3 or > 200)
                 throw new ValidationException(nameof(newTest.Name), $"Параметр {nameof(newTest.Name)} является обязательным и должен содержать не менее 3 и не более 200 символов");
 
-            newTest.CreatedAt = DateTime.UtcNow;
-
             return await _testRepository.InsertAsync(newTest);
         }
 
         public async Task<Core.Models.Test.Test> GetAsync(int id)
-
         {
             if (id <= default(int))
                 throw new ValidationException(nameof(id), $"{nameof(id)} должен быть больше {default(int)}");

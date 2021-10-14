@@ -8,9 +8,6 @@ namespace TssT.Core.Models.Test
         [Required(AllowEmptyStrings = false)]
         [StringLength(200, MinimumLength = 3)]
         public string Name { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
         public string? Description { get; set; }
     }
 }
