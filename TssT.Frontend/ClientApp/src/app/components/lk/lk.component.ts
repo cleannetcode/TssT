@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-lk',
@@ -19,11 +20,15 @@ export class LkComponent implements AfterViewInit{
 
   currentUser = this.authService.getCurrentUser();
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
 
   }
   ngAfterViewInit(): void {
 
+  }
+
+  getCurrentRoute(){
+    return this.router.url
   }
 
 }

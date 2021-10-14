@@ -19,4 +19,11 @@
   &__sidebar {
     min-width: 220px;
   }
+
+  &__profile{
+    &-image {
+      background-color: #f3f3f3;
+    }
+  }
 }
+

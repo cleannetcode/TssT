@@ -11,15 +11,27 @@
           <mat-card-title> {{ currentUser.login }}</mat-card-title>
           <mat-card-subtitle></mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
-        </mat-card-content>
       </mat-card>
 
       <mat-nav-list>
-        <a mat-list-item routerLink="{{ item.route }}" *ngFor="let item of navMenu">
-          <mat-icon color="primary" mat-list-icon>{{ item.icon }}</mat-icon>
-          <span matLine>{{item.text}}</span>
-        </a>
+
+        <ng-container *ngFor="let item of navMenu">
+
+          <mat-list-item routerLink="{{ item.route }}"
+                         *ngIf="this.getCurrentRoute() != item.route; else inactiveLinkTemplate">
+            <mat-icon color="primary" mat-list-icon>{{ item.icon }}</mat-icon>
+            <span matLine>{{item.text}} </span>
+          </mat-list-item>
+
+          <ng-template #inactiveLinkTemplate>
+            <mat-list-item [ngStyle]="{'pointer-events':'none'}" class="mat-accent mat-active mat-primary mat-background-primary">
+              <mat-icon color="primary" mat-list-icon>{{ item.icon }}</mat-icon>
+              <span matLine class="mat-primary">{{item.text}}</span>
+            </mat-list-item>
+          </ng-template>
+
+        </ng-container>
+
       </mat-nav-list>
 
     </div>
