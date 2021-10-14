@@ -45,7 +45,7 @@ namespace TssT.DataAccess.Repositories.Test
             return _mapper.Map<Core.Models.Test.Test>(entity);
         }
 
-        public async Task<IList<Core.Models.Test.Test>> GetAllAsync()
+        public async Task<IReadOnlyCollection<Core.Models.Test.Test>> GetAllAsync()
         {
             var entities = await _dbContext.Tests.ToListAsync();
             return _mapper.Map<List<Core.Models.Test.Test>>(entities);

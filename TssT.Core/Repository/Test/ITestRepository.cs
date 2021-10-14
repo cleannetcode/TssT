@@ -8,7 +8,7 @@ namespace TssT.Core.Repository.Test
     {
         Task<int> InsertAsync(NewTest newTest);
         Task<Models.Test.Test> GetAsync(int testId);
-        Task<IList<Models.Test.Test>> GetAllAsync();
+        Task<IReadOnlyCollection<Models.Test.Test>> GetAllAsync();
         Task UpdateAsync(Models.Test.Test test);
         Task DeleteAsync(int testId);
     }
