@@ -5,6 +5,8 @@ import {environment} from "../../environments/environment";
 import {BaseCollectionResponse} from "../contracts/BaseCollectionResponse";
 import {AuthService} from "./auth.service";
 import {map, Observable} from 'rxjs';
+import {Test} from "../models/Test";
+import {BaseCreateResponse} from "../Contracts/BaseCreateResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +30,15 @@ export class TestService {
   }
 
   getTests(): Observable<BaseCollectionResponse>{
-    return this.http.get<BaseCollectionResponse>(this.API_URL + "/Test/GetAll");
+    return this.http.get<BaseCollectionResponse>(this.API_URL + "/Test");
   }
 
   getTest(id: number){
-    return this.http.get<BaseCollectionResponse>(this.API_URL + "/Test/Get");
+    return this.http.get<BaseCollectionResponse>(this.API_URL + "/Test/" + id);
+  }
+
+  saveTest(test: Test){
+    return this.http.post<BaseCreateResponse>(this.API_URL + "/Test", test);
   }
 
 }
