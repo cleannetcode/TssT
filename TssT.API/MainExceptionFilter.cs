@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using TssT.Core.Exceptions;
+using TssT.Businesslogic.Exceptions;
 
 namespace TssT.API
 {
@@ -10,16 +11,46 @@ namespace TssT.API
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            switch (context.Exception)
+            if (context.Exception is not null)
             {
-                case ProblemDetailsException exception:
-                    context.Result = new ObjectResult(exception.Details)
-                    {
-                        ContentTypes = { "application/problem+json" },
-                        StatusCode = exception.Details.Status
-                    };
-                    context.ExceptionHandled = true;
-                    break;
+                var problemDetails = new ProblemDetails()
+                {
+                    Type = "https://example.com/unhandled",
+                    Detail = context.Exception.Message,
+                    Title = "Неизвестная ошибка",
+                    Status = 500
+                };
+                
+                switch (context.Exception)
+                {
+                    case ValidationException validationException:
+                        problemDetails = new ProblemDetails
+                        {
+                            Type = "https://example.com/validation",
+                            Detail = validationException.Message,
+                            Title = "Ошибка валидации",
+                            Status = 400
+                        };
+                        break;
+                
+                    case EntityNotFoundException entityNotFoundException:
+                        problemDetails = new ProblemDetails
+                        {
+                            Type = "https://example.com/entity-not-found",
+                            Detail = entityNotFoundException.Message,
+                            Title = "Объект не найден",
+                            Status = 400
+                        };
+                        break;
+                }
+                
+                context.Result = new ObjectResult(problemDetails)
+                {
+                    ContentTypes = {"application/problem+json"},
+                    StatusCode = problemDetails.Status
+                };
+
+                context.ExceptionHandled = true;
             }
         }
     }

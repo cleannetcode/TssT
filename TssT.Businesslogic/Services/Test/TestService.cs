@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using TssT.Core.Exceptions;
+using TssT.Businesslogic.Exceptions;
 using TssT.Core.Repository.Test;
 
 namespace TssT.Businesslogic.Services.Test
@@ -24,10 +24,10 @@ namespace TssT.Businesslogic.Services.Test
         public async Task<int> CreateAsync(Core.Models.Test newTest)
         {
             if (newTest == null)
-                throw new ValidationException(nameof(newTest), $"Параметр {nameof(newTest)} является обязательным");
+                throw new ValidationException($"Параметр {nameof(newTest)} является обязательным");
 
             if (string.IsNullOrWhiteSpace(newTest.Name) || newTest.Name.Length is <= 3 or > 200)
-                throw new ValidationException(nameof(newTest.Name), $"Параметр {nameof(newTest.Name)} является обязательным и должен содержать не менее 3 и не более 200 символов");
+                throw new ValidationException($"Параметр {nameof(newTest.Name)} является обязательным и должен содержать не менее 3 и не более 200 символов");
 
             return await _testRepository.InsertAsync(newTest);
         }
@@ -35,7 +35,7 @@ namespace TssT.Businesslogic.Services.Test
         public async Task<Core.Models.Test> GetAsync(int id)
         {
             if (id <= default(int))
-                throw new ValidationException(nameof(id), $"{nameof(id)} должен быть больше {default(int)}");
+                throw new ValidationException($"{nameof(id)} должен быть больше {default(int)}");
 
             var entity = await _testRepository.GetAsync(id);
 
@@ -52,12 +52,12 @@ namespace TssT.Businesslogic.Services.Test
         public async Task DeleteAsync(int testId)
         {
             if (testId <= default(int))
-                throw new ValidationException(nameof(testId), $"{nameof(testId)} должен быть больше {default(int)}");
+                throw new ValidationException($"{nameof(testId)} должен быть больше {default(int)}");
 
             var test = await _testRepository.GetAsync(testId);
 
             if (test == null)
-                throw new EntityNotFoundException(testId);
+                throw new EntityNotFoundException($"Тест с идентификатором {testId} не найден");
 
             test.DeletedAt = DateTime.UtcNow;
 
