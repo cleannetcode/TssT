@@ -16,13 +16,18 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from "@angular/material/table";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 import { LoginComponent } from './components/login/login.component';
 import { LkComponent } from './components/lk/lk.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { LkProfileComponent } from './components/lk-profile/lk-profile.component';
-import {NotFoundComponent} from "./components/not-found/not-found.component";
+import { NotFoundComponent } from "./components/not-found/not-found.component";
+
+import { TestCreateComponent } from './components/test.create/test.create.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +35,7 @@ import {NotFoundComponent} from "./components/not-found/not-found.component";
     LoginComponent,
     LkComponent,
     LkProfileComponent,
+    TestCreateComponent,
     NotFoundComponent
   ],
   imports: [
@@ -48,6 +54,9 @@ import {NotFoundComponent} from "./components/not-found/not-found.component";
     MatSnackBarModule,
     MatListModule,
     MatSidenavModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatGridListModule,
     ReactiveFormsModule,
   ],
   providers: [
