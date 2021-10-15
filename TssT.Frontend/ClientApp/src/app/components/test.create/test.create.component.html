@@ -1,0 +1,73 @@
+﻿<h1>
+  Новый тест
+</h1>
+
+<form [formGroup]="testForm">
+
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Наименование</mat-label>
+    <input matInput  #testName
+           required
+           id="name"
+           formControlName="name"
+           minlength="3"
+           maxlength="200"
+           autocomplete="off"
+    >
+  </mat-form-field>
+</p>
+
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Описание</mat-label>
+    <textarea matInput #testDescription
+              id="description"
+              style="min-height: 100px"
+              formControlName="description"></textarea>
+  </mat-form-field>
+</p>
+
+<h2>Добавить топики</h2>
+
+<div class="topic-add-block">
+  <mat-form-field appearance="standard">
+    <mat-label>Наименование топика</mat-label>
+    <input matInput placeholder="Placeholder"
+           #topicName
+           (keyup.enter)="addTopic(topicName.value)"
+           autocomplete="off"
+    >
+    <mat-icon matSuffix></mat-icon>
+  </mat-form-field>
+  <button mat-button>
+    <mat-icon color="primary" (click)="addTopic(topicName.value)">save</mat-icon>
+  </button>
+</div>
+
+<table mat-table [dataSource]="topicsDataSource">
+
+  <ng-container matColumnDef="position">
+    <th mat-header-cell *matHeaderCellDef> №. </th>
+    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Наименование </th>
+    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+               showFirstLastButtons
+               aria-label="Select page of periodic elements">
+</mat-paginator>
+
+<p>
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="!testForm.valid">Сохранить</button>
+</p>
+
+</form>
