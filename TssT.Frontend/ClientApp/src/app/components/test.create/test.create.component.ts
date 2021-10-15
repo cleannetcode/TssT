@@ -93,9 +93,9 @@ export class TestCreateComponent implements AfterViewInit {
       });
   }
 
-  removeTopic(name:any){
+  removeTopic(topicName:string){
     if (window.confirm("Вы действительно хотите удалить топик?")) {
-      let index = this.test.topics.findIndex(x=>x.name == name);
+      let index = this.test.topics.findIndex(x=>x.name == topicName);
       if (index >= 0){
         this.test.topics.splice(index, 1);
         this.refreshTopicsTable();

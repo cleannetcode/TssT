@@ -40,8 +40,10 @@
     >
     <mat-icon matSuffix></mat-icon>
   </mat-form-field>
-  <button mat-button>
-    <mat-icon color="primary" (click)="addTopic(topicName.value)">save</mat-icon>
+  <button mat-icon-button color="primary"
+          (click)="addTopic(topicName.value)"
+          [disabled]="topicName.value.length < 3 || topicName.value.length > 200">
+    <mat-icon>save</mat-icon>
   </button>
 </div>
 
