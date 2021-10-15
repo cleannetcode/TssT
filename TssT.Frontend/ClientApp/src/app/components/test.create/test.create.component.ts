@@ -17,7 +17,7 @@ import {FormBuilder} from "@angular/forms";
 
 export class TestCreateComponent implements AfterViewInit {
 
-  displayedColumns: string[] = ['position', 'name'];
+  displayedColumns: string[] = ['name','actions'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -88,6 +88,16 @@ export class TestCreateComponent implements AfterViewInit {
           this.snackBar.open(err.message, "ok", { duration: 5 * 1000 });
         }
       });
+  }
+
+  removeTopic(name:any){
+    if (window.confirm("Вы действительно хотите удалить топик?")) {
+      let index = this.test.topics.findIndex(x=>x.name == name);
+      if (index >= 0){
+        this.test.topics.splice(index, 1);
+        this.refreshTopicsTable();
+      }
+    }
   }
 
 }
