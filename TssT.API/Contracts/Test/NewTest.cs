@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TssT.API.Contracts.Test
 {
@@ -10,5 +11,7 @@ namespace TssT.API.Contracts.Test
 
         [MaxLength(300)]
         public string? Description { get; set; }
+        
+        public IReadOnlyCollection<string> Topics { get; set; }
     }
 }

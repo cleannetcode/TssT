@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using TssT.API.Contracts;
 using TssT.API.Contracts.Test;
 using TssT.Core.Models;
@@ -21,7 +22,14 @@ namespace TssT.API
             CreateMap<User, Contracts.User>().ReverseMap();
             CreateMap<Role, Contracts.Role>().ReverseMap();
 
-            CreateMap<NewTest, Test>();
+            CreateMap<NewTest, Test>()
+                .ForMember(x=>x.Topics, 
+                    options => 
+                        options.MapFrom(src=>
+                            src.Topics.Select(topicName => new Topic()
+                            {
+                                Name = topicName
+                            })));
         }
     }
 }
