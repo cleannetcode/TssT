@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Test} from "../../models/Test";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+import {TestService} from "../../services/test.service";
 
 @Component({
   selector: 'app-lk-profile',
@@ -16,7 +17,9 @@ export class LkProfileComponent implements OnInit {
     available: new Array<Test>(),
   }
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router,
+              private authService: AuthService,
+              private testService: TestService) {
 
     let isLogged = authService.isLoggedIn();
 
@@ -30,16 +33,20 @@ export class LkProfileComponent implements OnInit {
 
   getTests(){
 
+
+
     this.tests.completed = [
       new Test(".NET FullStack" ),
       new Test(".NET Junior"),
     ];
 
-    this.tests.available = [
-      new Test(".NET Senior"),
-      new Test(".NET Middle"),
-    ];
+    this.testService.getTests().subscribe(response=>{
 
+      if (response.totalCount > 0){
+        this.tests.available = response.items;
+      }
+
+    });
   }
 
 }

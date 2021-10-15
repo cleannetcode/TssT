@@ -18,5 +18,6 @@
   <a mat-list-item *ngFor="let test of this.tests.available" routerLink="./{{ test.id }}">
     <mat-icon mat-list-icon color="primary">note</mat-icon>
     <div mat-line>{{test.name}}</div>
+    <div mat-line *ngIf="test.description">{{test.description}}</div>
   </a>
 </mat-nav-list>
