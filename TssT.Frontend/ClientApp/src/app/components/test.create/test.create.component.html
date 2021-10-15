@@ -28,22 +28,20 @@
 
 <h2>Добавить топики</h2>
 
-<div class="topic-add-block">
-  <mat-form-field appearance="standard">
-    <mat-label>Наименование топика</mat-label>
-    <input matInput placeholder="Placeholder"
-           #topicName
-           (keyup.enter)="addTopic(topicName.value)"
-           autocomplete="off"
-    >
-    <mat-icon matSuffix></mat-icon>
-  </mat-form-field>
+<mat-form-field appearance="standard">
+  <mat-label>Наименование топика</mat-label>
+  <input matInput
+         #topicName
+         (keyup.enter)="addTopic(topicName.value)"
+         autocomplete="off"
+  >
   <button mat-icon-button color="primary"
+          matSuffix
           (click)="addTopic(topicName.value)"
           [disabled]="topicName.value.length < 3 || topicName.value.length > 200">
     <mat-icon>save</mat-icon>
   </button>
-</div>
+</mat-form-field>
 
 <table mat-table [dataSource]="topicsDataSource">
 
