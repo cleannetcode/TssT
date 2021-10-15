@@ -34,6 +34,8 @@ export class TestCreateComponent implements AfterViewInit {
 
   public topicsDataSource: MatTableDataSource<Topic>
 
+  public isLoading:boolean
+
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -79,6 +81,8 @@ export class TestCreateComponent implements AfterViewInit {
 
   save(){
 
+    this.isLoading = true;
+
     this.testService
       .saveTest(this.testForm.value)
       .subscribe({
@@ -89,6 +93,10 @@ export class TestCreateComponent implements AfterViewInit {
         },
         error: err => {
           this.snackBar.open(err.message, "ok", { duration: 5 * 1000 });
+          this.isLoading = false;
+        },
+        complete: () => {
+          this.isLoading = false;
         }
       });
   }

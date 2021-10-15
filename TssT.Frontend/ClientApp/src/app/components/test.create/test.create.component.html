@@ -1,8 +1,6 @@
-﻿<h1>
-  Новый тест
-</h1>
+﻿<form [formGroup]="testForm" id="test-create-form">
 
-<form [formGroup]="testForm">
+<h1>Новый тест</h1>
 
 <p>
   <mat-form-field appearance="fill">
@@ -76,5 +74,10 @@
 <p>
   <button mat-raised-button color="primary" (click)="save()" [disabled]="!testForm.valid">Сохранить</button>
 </p>
+
+  <div class="loader" *ngIf="isLoading">
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </div>
 
 </form>
