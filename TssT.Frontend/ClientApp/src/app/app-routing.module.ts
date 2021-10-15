@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { LkComponent } from './components/lk/lk.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LkProfileComponent } from './components/lk-profile/lk-profile.component';
+import { TestCreateComponent } from './components/test.create/test.create.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,6 +15,14 @@ const routes: Routes = [
   { path: 'lk', component: LkComponent,
     children:[
       { path: 'profile', component: LkProfileComponent},//canActivate: [AuthGuard]
+      {
+        path: 'test',
+        children: [
+          {
+            path: 'create', component: TestCreateComponent
+          }
+        ]
+      },
     ]
   },
   { path: '**', component: NotFoundComponent }

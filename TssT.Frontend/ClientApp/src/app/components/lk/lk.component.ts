@@ -14,6 +14,7 @@ export class LkComponent implements AfterViewInit{
 
   navMenu = [
     { route: '/lk/profile', text: 'Профиль', icon: 'face' },
+    { route: '/lk/test/create', text: 'Новый тест', icon: 'add' },
     { route: '/logout', text: 'Выход', icon: 'exit_to_app' },
   ];
 
