@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace TssT.Core.Models
+﻿namespace TssT.Core.Models
 {
     /// <summary>
     /// Группа топиков

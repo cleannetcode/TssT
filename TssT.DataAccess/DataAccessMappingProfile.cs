@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using TssT.Core.Models;
+using Test = TssT.DataAccess.Entities.Test;
 
 namespace TssT.DataAccess
 {
@@ -6,11 +8,12 @@ namespace TssT.DataAccess
     {
         public DataAccessMappingProfile()
         {
-            CreateMap<Core.Models.Answer, Entities.Answer>().ReverseMap();
-            CreateMap<Core.Models.TopicGroup, Entities.TopicGroup>().ReverseMap();
-            CreateMap<Core.Models.Topic, Entities.Topic>().ReverseMap();
-            CreateMap<Core.Models.LevelImportance, Entities.LevelImportance>().ReverseMap();
-            CreateMap<Core.Models.LevelKnowledge, Entities.LevelKnowledge>().ReverseMap();
+            CreateMap<Answer, Entities.Answer>().ReverseMap();
+            CreateMap<Topic, Entities.Topic>().ReverseMap();
+            CreateMap<LevelImportance, Entities.LevelImportance>().ReverseMap();
+            CreateMap<LevelKnowledge, Entities.LevelKnowledge>().ReverseMap();
+
+            CreateMap<Core.Models.Test, Test>().ReverseMap();
         }
     }
 }

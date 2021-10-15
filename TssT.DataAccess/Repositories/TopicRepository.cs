@@ -1,15 +1,12 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TssT.Core.Interfaces;
 using TssT.Core.Models;
 
 namespace TssT.DataAccess.Repositories
 {
-    /// <summary>
-    /// Класс репозиторий для доступа к данным о топиках
-    /// </summary>
     public class TopicRepository : ITopicRepository
     {
         private readonly IMapper _mapper;
@@ -21,11 +18,6 @@ namespace TssT.DataAccess.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        /// <summary>
-        /// Добавляет новый топик в базу данных
-        /// </summary>
-        /// <param name="topic">Топик</param>
-        /// <returns>В случае успешного выполнения вернет идентификатор добавленной записи</returns>
         public async Task<int> AddAsync(Topic topic)
         {
             if (topic == null)

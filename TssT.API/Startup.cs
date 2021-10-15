@@ -1,14 +1,23 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Http;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using TssT.Businesslogic;
+using TssT.Businesslogic.Services.Test;
+using TssT.Core.Repository.Test;
 using TssT.DataAccess;
+using TssT.DataAccess.Entities;
+using TssT.DataAccess.Repositories.Test;
 
 namespace TssT.API
 {
@@ -18,18 +27,15 @@ namespace TssT.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            
-            
         }
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var authOptions = new AuthOptions(Configuration).Configure();
             services.AddSingleton(authOptions);
-            
+
             services.AddCors(o => o.AddPolicy(DefaultPolicyName,
                 builder =>
                 {
@@ -53,13 +59,14 @@ namespace TssT.API
             {
                 conf.AddProfile<ApiMappingProfile>();
                 conf.AddProfile<DataAccessMappingProfile>();
+                conf.AddProfile<BLMappingProfile>();
             });
 
             //In combination with UseDeveloperExceptionPage, this captures database-related exceptions that can be resolved by using Entity Framework migrations.
             //When these exceptions occur, an HTML response with details about possible actions to resolve the issue is generated.
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddIdentity<DataAccess.Entities.User, DataAccess.Entities.Role>(
+            services.AddIdentity<User, Role>(
                 options =>
                 {
                     options.Password.RequireDigit = false;
@@ -79,29 +86,29 @@ namespace TssT.API
             .AddJwtBearer(options =>
             {
                 options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    // валидируется ли издатель токена
                     ValidateIssuer = true,
-                    // издатель
                     ValidIssuer = authOptions.Issuer,
-
-                    // валидируется ли потребитель токена
                     ValidateAudience = true,
-                    // потребитель токена
                     ValidAudience = authOptions.Audience,
-
-                    // валидация времени существования токена
                     ValidateLifetime = true,
-
-                    // валидируется ли ключ безопасности
                     ValidateIssuerSigningKey = true,
-                    // ключ безопасности
                     IssuerSigningKey = authOptions.GetSymmetricSecurityKey()
                 };
             });
 
-            services.AddControllers();
+            services.AddScoped<ITestRepository, TestRepository>();
+            services.AddScoped<ITestService, TestService>();
+
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(new MainExceptionFilter());
+            });
+
+            services
+                .AddControllers()
+                .AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
 
             services.AddSwaggerGen(options =>
             {
@@ -119,7 +126,7 @@ namespace TssT.API
                     Scheme = "Bearer"
                 });
 
-                options.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory, "TssT.API.xml"));
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, "TssT.API.xml"));
 
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement()
                 {

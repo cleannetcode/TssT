@@ -1,14 +1,14 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TssT.API.Contracts;
+using User = TssT.DataAccess.Entities.User;
 
 namespace TssT.API.Controllers
 {
@@ -17,10 +17,10 @@ namespace TssT.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly UserManager<DataAccess.Entities.User> _userManager;
+        private readonly UserManager<User> _userManager;
 
         public UserController(IMapper mapper, 
-            UserManager<DataAccess.Entities.User> userManager)
+            UserManager<User> userManager)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -52,7 +52,7 @@ namespace TssT.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.Values.SelectMany(v => v.Errors));
 
-            DataAccess.Entities.User userForCreate = new DataAccess.Entities.User()
+            User userForCreate = new User()
             {
                 Id = Guid.NewGuid().ToString(),
                 UserName = user.UserName,
