@@ -26,7 +26,9 @@ namespace TssT.API
                 .ForMember(x=>x.Topics, 
                     options => 
                         options.MapFrom(src=>
-                            src.Topics.Select(topicName => new Topic()
+                            src.Topics
+                                .Where(x=>!string.IsNullOrWhiteSpace(x))
+                                .Select(topicName => new Topic
                             {
                                 Name = topicName
                             })));
