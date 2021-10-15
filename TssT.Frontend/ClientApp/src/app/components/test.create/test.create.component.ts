@@ -24,7 +24,6 @@ export class TestCreateComponent implements AfterViewInit {
   @ViewChild('testName') newTestNameInput:ElementRef;
   @ViewChild('topicName') newTopicNameInput:ElementRef;
 
-
   public test: Test
 
   public testForm = this.formBuilder.group({
@@ -87,18 +86,25 @@ export class TestCreateComponent implements AfterViewInit {
       .saveTest(this.testForm.value)
       .subscribe({
         next: value => {
+
           if (value.id > 0){
+
+            this.snackBar.open("Сохранено","ok", {duration: 1.5 * 1000});
             this.router.navigate(['/lk']);
+
           }
+
         },
         error: err => {
-          this.snackBar.open(err.message, "ok", { duration: 5 * 1000 });
           this.isLoading = false;
+          this.snackBar.open(err.error.detail, "ok", { duration: 2 * 1000 });
+          console.log(err)
         },
         complete: () => {
           this.isLoading = false;
         }
       });
+
   }
 
   removeTopic(topicName:string){
