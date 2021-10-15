@@ -48,7 +48,10 @@ export class TestCreateComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.topicsDataSource.paginator = this.paginator;
 
-    this.newTestNameInput.nativeElement.focus();
+    setTimeout(()=>{
+      // this will make the execution after the above boolean has changed
+      this.newTestNameInput.nativeElement.focus();
+    },0);
   }
 
   validateTopicNameInput() : boolean{
