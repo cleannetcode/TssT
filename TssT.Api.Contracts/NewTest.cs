@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace TssT.API.Contracts.Test
+namespace TssT.Api.Contracts
 {
     public class NewTest
     {
@@ -10,5 +11,7 @@ namespace TssT.API.Contracts.Test
 
         [MaxLength(300)]
         public string? Description { get; set; }
+        
+        public List<string> Topics { get; set; }
     }
 }

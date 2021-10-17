@@ -20,9 +20,11 @@ export class AuthService {
     const headers = new HttpHeaders()
       .set('content-type', 'application/json');
 
-    http.options(this.API_URL, {
-      'headers': headers
-    });
+    http.options(
+      this.API_URL,
+      {
+        'headers': headers
+      });
   }
 
   isLoggedIn() {

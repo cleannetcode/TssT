@@ -2,9 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TssT.Api.Contracts;
 using TssT.API.Contracts;
-using TssT.API.Contracts.Test;
 using TssT.Businesslogic.Services.Test;
 
 namespace TssT.API.Controllers.Test
@@ -28,9 +29,11 @@ namespace TssT.API.Controllers.Test
             _testService = testService ?? throw new ArgumentNullException(nameof(testService));
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<BaseCreateResponse> Create([FromBody] NewTest request)
         {
+            Console.WriteLine($"POST Create {request.Name}");
             var newTest = _mapper.Map<Core.Models.Test>(request);
 
             var createdId = await _testService.CreateAsync(newTest);

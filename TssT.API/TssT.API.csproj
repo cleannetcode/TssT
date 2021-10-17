@@ -31,6 +31,7 @@
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\TssT.Api.Contracts\TssT.Api.Contracts.csproj" />
       <ProjectReference Include="..\TssT.Businesslogic\TssT.Businesslogic.csproj" />
       <ProjectReference Include="..\TssT.DataAccess\TssT.DataAccess.csproj" />
     </ItemGroup>
