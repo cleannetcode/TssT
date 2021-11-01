@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+
+  database:
+    image: "postgres"
+    container_name: "TssT"
+    environment:
+    - POSTGRES_USER=TssT
+    - POSTGRES_PASSWORD=QwertyTssT
+    - POSTGRES_DB=TssT
+    ports:
+      - "8432:5432"

@@ -51,8 +51,7 @@ namespace TssT.API
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddAutoMapper(conf =>
